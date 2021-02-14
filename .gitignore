@@ -1,2 +1,8 @@
 # Project exclude paths
-/cmake-build-debug/
+/cmake-build-debug/CMakeFiles
+/cmake-build-debug/Testing
+/cmake-build-debug/calculatorProject.cbp
+/cmake-build-debug/calculatorProject.exe
+/cmake-build-debug/cmake_install.cmake
+/cmake-build-debug/Makefile
+/cmake-build-debug/CMakeCache.txt
