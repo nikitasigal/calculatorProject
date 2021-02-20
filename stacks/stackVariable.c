@@ -28,7 +28,8 @@ void forwardVariable(struct StackVariable **s, struct StackVariable *cur) {
 	struct StackVariable *next = cur->next;
 
 	prev->next = cur->next;
-	next->prev = cur->prev;
+	if(next)
+		next->prev = cur->prev;
 
 	cur->prev = NULL;
 	cur->next = *s;
