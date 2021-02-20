@@ -1,6 +1,6 @@
 #include "mapComplex.h"
 
-void initMapComplex(struct MapComplex *m) {
+void initMapComplex(struct MapComplex m[MAP_SIZE]) {
 	for (int i = 0; i < MAP_SIZE; ++i) {
 		m[i].key[0] = 0;
 		m[i].value = 0;
@@ -8,7 +8,7 @@ void initMapComplex(struct MapComplex *m) {
 	}
 }
 
-void insertComplex(struct MapComplex *m, char *key, complex double value) {
+void insertComplex(struct MapComplex m[MAP_SIZE], char key[KEY_SIZE], complex double value) {
 	unsigned int id = hash(key);
 
 	if (m[id].empty) {
@@ -28,9 +28,13 @@ void insertComplex(struct MapComplex *m, char *key, complex double value) {
 			return;
 		} else
 			id = (id + 1) % MAP_SIZE;
+
+	printf("Critical error: unable to insertComplex() - possible overflow");
+	exit(EXIT_FAILURE);
 }
 
-double complex getComplex(struct MapComplex *m, char *key) {
+//Returns the VALUE of the requested variable or throws exception if the variable is not found
+complex double getComplex(struct MapComplex m[MAP_SIZE], char key[KEY_SIZE]) {
 	unsigned int id = hash(key);
 
 	if (!m[id].empty && !strcmp(m[id].key, key))
@@ -44,5 +48,6 @@ double complex getComplex(struct MapComplex *m, char *key) {
 		} else
 			id = (id + 1) % MAP_SIZE;
 
-	return 0;
+	printf("Critical error: value %s is not defined", key);
+	exit(EXIT_FAILURE);
 }

@@ -8,6 +8,7 @@
 struct Variable {
 	char name[VAR_NAME_SIZE];
 	char expression[VAR_EXPR_SIZE];
+	short isSorted;
 };
 
 struct StackVariable {
@@ -15,7 +16,7 @@ struct StackVariable {
 	struct StackVariable *prev, *next;
 };
 
-void pushVariable(struct StackVariable **s, char *name, char *expression);
+void pushVariable(struct StackVariable **s, char name[VAR_NAME_SIZE], char expression[VAR_EXPR_SIZE]);
 
 struct Variable popVariable(struct StackVariable **s);
 

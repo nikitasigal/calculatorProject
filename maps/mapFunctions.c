@@ -8,7 +8,7 @@ void initMapFunctions(struct MapFunctions m[MAP_SIZE]) {
 	}
 }
 
-void insertFunction(struct MapFunctions m[MAP_SIZE], char *key, complex double (*ptr)(struct StackComplex *)) {
+void insertFunction(struct MapFunctions m[MAP_SIZE], char key[KEY_SIZE], complex double (*ptr)(struct StackComplex *)) {
 	unsigned int id = hash(key);
 
 	if (m[id].empty) {
@@ -28,9 +28,13 @@ void insertFunction(struct MapFunctions m[MAP_SIZE], char *key, complex double (
 			return;
 		} else
 			id = (id + 1) % MAP_SIZE;
+
+	printf("Critical error: unable to insertFunction() - possible overflow");
+	exit(EXIT_FAILURE);
 }
 
-unsigned int findFunction(struct MapFunctions m[MAP_SIZE], char *key) {
+//Returns the INDEX of the requested function in the map or INT_MAX if the function is not found
+unsigned int findFunction(struct MapFunctions m[MAP_SIZE], char key[KEY_SIZE]) {
 	unsigned int id = hash(key);
 
 	if (!m[id].empty && !strcmp(m[id].key, key))
@@ -44,5 +48,7 @@ unsigned int findFunction(struct MapFunctions m[MAP_SIZE], char *key) {
 		} else
 			id = (id + 1) % MAP_SIZE;
 
+	//Requested function is not found, but this does NOT throw exceptions
+	//INT_MAX is used to signal that current calculation element is NOT a function
 	return INT_MAX;
 }

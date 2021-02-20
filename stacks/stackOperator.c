@@ -8,6 +8,11 @@ void pushOperator(struct StackOperator **s, char *op) {
 }
 
 void popOperator(struct StackOperator **s, char *op) {
+	if (!(*s)) {
+		printf("Critical error: attempted popOperator() from empty stack\n");
+		exit(EXIT_FAILURE);
+	}
+
 	strcpy(op, (*s)->op);
 	struct StackOperator *next = (*s)->next;
 	free(*s);
