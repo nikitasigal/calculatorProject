@@ -3,12 +3,31 @@
 void pushVariable(struct StackVariable **s, char name[VAR_NAME_SIZE], char expression[VAR_EXPR_SIZE]) {
 	struct Variable var;
 	strcpy(var.name, name);
-	strcpy(var.expression, expression);
+
+	//strcpy(var.expression, expression);
+	var.elements = 0;
+	var.isSorted = 0;
+	for (int i = 0; i < strlen(expression);) {
+		char str[VAR_ELEMENT_SIZE] = {0};
+		int crt = 0;
+		if (isalpha(expression[i])) {
+			while (isalpha(expression[i]))
+				str[crt++] = expression[i++];
+			strcpy(var.expression[var.elements++], str);
+		} else if (isdigit(expression[i])) {
+			while (isdigit(expression[i]) || expression[i] == '.')
+				str[crt++] = expression[i++];
+			strcpy(var.expression[var.elements++], str);
+		} else {
+			if (expression[i] != ' ')
+				var.expression[var.elements++][0] = expression[i];
+			i++;
+		}
+	}
 
 	struct StackVariable *temp = (struct StackVariable *) malloc(sizeof(struct StackVariable));
 	temp->var = var;
 	temp->next = *s;
-	temp->var.isSorted = 0;
 
 	if (temp->next)
 		temp->next->prev = temp;

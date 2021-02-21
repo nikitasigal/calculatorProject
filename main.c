@@ -19,9 +19,13 @@ int main() {
 
 	struct StackVariable *sVar = NULL;
 	pushVariable(&sVar, "Abc", "B + C - 12");
-	pushVariable(&sVar, "loss", "14^345");
+	pushVariable(&sVar, "loss", "log(cos(sin(tg(I+10))), pow(exp(3)*ln(2.718281828^2), ctg(sqrt(real(10 - 3 * mag(I + 5 * I - 10))))))");
 	forwardVariable(&sVar, sVar->next);
-	printf("%s\n", popVariable(&sVar).name);
+	struct Variable fgf = popVariable(&sVar);
+	for (int i = 0; i < fgf.elements; ++i) {
+		printf("%s ", fgf.expression[i]);
+	}
+	printf("\n");
 
 
 	struct StackOperator *sOp = NULL;

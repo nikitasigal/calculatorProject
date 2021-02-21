@@ -5,9 +5,12 @@
 
 #define VAR_NAME_SIZE 10
 #define VAR_EXPR_SIZE 300
+#define VAR_ELEMENT_COUNT 300
+#define VAR_ELEMENT_SIZE 20
 struct Variable {
 	char name[VAR_NAME_SIZE];
-	char expression[VAR_EXPR_SIZE];
+	int elements;
+	char expression[VAR_ELEMENT_COUNT][VAR_ELEMENT_SIZE];
 	short isSorted;
 };
 
