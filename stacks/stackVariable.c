@@ -58,7 +58,7 @@ void forwardVariable(struct StackVariable **s, struct StackVariable *cur) {
 
 	if (cur == (*s)) {
 		printf("Potential error: attempted to forwardVariable() which was already in front of the stack\n");
-		exit(EXIT_FAILURE);
+		return;
 	}
 
 	struct StackVariable *prev = cur->prev;
@@ -73,4 +73,34 @@ void forwardVariable(struct StackVariable **s, struct StackVariable *cur) {
 	if (cur->next)
 		cur->next->prev = cur;
 	*s = cur;
+}
+
+void sortVariables(struct StackVariable **s, struct MapFunctions m[MAP_SIZE]) {
+	struct StackVariable *cur = (*s);
+	while (cur != NULL) {
+		if (!cur->var.isSorted) {
+			for (int j = 0; j < (cur->var.elements); j++) {
+				if (findFunction(m, cur->var.expression[j]) == INT_MAX &&
+				    isalpha(cur->var.expression[j][0])) {
+
+					struct StackVariable *temp = (*s);
+					while (temp) {
+						if (!strcmp(temp->var.name, cur->var.expression[j])) {
+							forwardVariable(s, temp);
+							break;
+						}
+						temp = temp->next;
+					}
+
+					if (temp == NULL) {
+						printf("Sort() did not find the variable; go fuck yourself!\n");
+						exit(EXIT_FAILURE);
+					}
+				}
+			}
+			cur->var.isSorted = 1;
+			cur = (*s);
+		}
+		cur = cur->next;
+	}
 }

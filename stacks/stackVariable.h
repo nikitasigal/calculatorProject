@@ -2,6 +2,7 @@
 #define CALCULATORPROJECT_STACKVARIABLE_H
 
 #include "../libraries.h"
+#include "../maps/mapFunctions.h"
 
 #define VAR_NAME_SIZE 10
 #define VAR_EXPR_SIZE 300
@@ -24,5 +25,7 @@ void pushVariable(struct StackVariable **s, char name[VAR_NAME_SIZE], char expre
 struct Variable popVariable(struct StackVariable **s);
 
 void forwardVariable(struct StackVariable **s, struct StackVariable *cur);
+
+void sortVariables(struct StackVariable **s, struct MapFunctions m[MAP_SIZE]);
 
 #endif //CALCULATORPROJECT_STACKVARIABLE_H
