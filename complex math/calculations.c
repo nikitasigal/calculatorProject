@@ -1,16 +1,88 @@
 #include "calculations.h"
 #include <stdbool.h>
 
+void unary(struct StackComplex **s) {
+    pushComplex(s, -1 * popComplex(s));
+}
+
 void add(struct StackComplex **s) {
-	pushComplex(s, popComplex(s) + popComplex(s));
+    pushComplex(s, popComplex(s) + popComplex(s));
 }
 
 void subtract(struct StackComplex **s) {
-	pushComplex(s, -1 * popComplex(s) + popComplex(s));
+    complex double right = popComplex(s);
+    complex double left = popComplex(s);
+    pushComplex(s, left - right);
 }
 
-void unary(struct StackComplex **s) {
-    pushComplex(s, -1 * popComplex(s));
+void multiply(struct StackComplex **s) {
+    pushComplex(s, popComplex(s) * popComplex(s));
+}
+
+void divide(struct StackComplex **s) {
+    complex double right = popComplex(s);
+    complex double left = popComplex(s);
+    pushComplex(s, left / right);
+}
+
+void sinus(struct StackComplex **s) {
+    pushComplex(s, csin(popComplex(s)));
+}
+
+void cosinus(struct StackComplex **s) {
+    pushComplex(s, ccos(popComplex(s)));
+}
+
+void tangens(struct StackComplex **s) {
+    pushComplex(s, ctan(popComplex(s)));
+}
+
+void cotangens(struct StackComplex **s) {
+    pushComplex(s, 1 / ctan(popComplex(s)));
+}
+
+void natlog(struct StackComplex **s) {
+    pushComplex(s, clog(popComplex(s)));
+}
+
+void tenlog(struct StackComplex **s) {
+    pushComplex(s, clog(popComplex(s)) / clog(10));
+}
+
+void justlog(struct StackComplex **s) {
+    complex double right = popComplex(s);
+    complex double left = popComplex(s);
+    pushComplex(s, clog(right) / clog(left));
+}
+
+void exponent(struct StackComplex **s) {
+    pushComplex(s, cexp(popComplex(s)));
+}
+
+void root(struct StackComplex **s) {
+    pushComplex(s, csqrt(popComplex(s)));
+}
+
+void power(struct StackComplex **s) {
+    complex double right = popComplex(s);
+    complex double left = popComplex(s);
+    pushComplex(s, cpow(left, right));
+}
+
+void module(struct StackComplex **s) {
+    pushComplex(s, cabs(popComplex(s)));
+}
+
+void real(struct StackComplex **s) {
+    pushComplex(s, creal(popComplex(s)));
+}
+
+void imag(struct StackComplex **s) {
+    pushComplex(s, cimag(popComplex(s)));
+}
+
+void argument(struct StackComplex **s) {
+    pushComplex(s, carg(popComplex(s)));
 }
 
 short isOperator(char *op) {
@@ -97,10 +169,4 @@ complex double calculate(struct MapFunctions *functions, struct MapComplex *vari
 	}
 
 	return values->value;
-}
-
-void power(struct StackComplex **s) {
-	complex double right = popComplex(s);
-	complex double left = popComplex(s);
-	pushComplex(s, cpow(left, right));
 }

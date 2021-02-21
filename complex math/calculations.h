@@ -8,13 +8,25 @@
 #include "../maps/mapComplex.h"
 #include "../maps/mapFunctions.h"
 
-void add(struct StackComplex **s);
-
-void subtract(struct StackComplex **s);
-
-void power(struct StackComplex **s);
-
 void unary(struct StackComplex **s);
+void add(struct StackComplex **s);
+void subtract(struct StackComplex **s);
+void multiply(struct StackComplex **s);
+void divide(struct StackComplex **s);
+void sinus(struct StackComplex **s);
+void cosinus(struct StackComplex **s);
+void tangens(struct StackComplex **s);
+void cotangens(struct StackComplex **s);
+void natlog(struct StackComplex **s);
+void tenlog(struct StackComplex **s);
+void justlog(struct StackComplex **s);
+void exponent(struct StackComplex **s);
+void root(struct StackComplex **s);
+void power(struct StackComplex **s);
+void module(struct StackComplex **s);
+void real(struct StackComplex **s);
+void imag(struct StackComplex **s);
+void argument(struct StackComplex **s);
 
 short isOperator(char op[OPERATOR_SIZE]);
 

@@ -9,16 +9,34 @@
 int main() {
 	struct StackVariable *sVar = NULL;
 	//pushVariable(&sVar, "B", "C - 12");
-	pushVariable(&sVar, "css", "-23+12");
-	pushVariable(&sVar, "Biba", "-123 + 12 - css");
+	pushVariable(&sVar, "css", "ln(sin(cos(ctg(5))))");
+	pushVariable(&sVar, "biba", "phase(5)");
+    pushVariable(&sVar, "boba", "log(12,120)");
 
 	struct MapFunctions mp1[MAP_SIZE];
 	initMapFunctions(mp1);
-	insertFunction(mp1, "+", &add);
-	insertFunction(mp1, "-", &subtract);
-	insertFunction(mp1, "pow", &power);
-	insertFunction(mp1, "^", &power);
-	insertFunction(mp1, "~", &unary);
+    insertFunction(mp1, "~", &unary);
+    insertFunction(mp1, "+", &add);
+    insertFunction(mp1, "-", &subtract);
+    insertFunction(mp1, "*", &multiply);
+    insertFunction(mp1, "/", &divide);
+    insertFunction(mp1, "sin", &sinus);
+    insertFunction(mp1, "cos", &cosinus);
+    insertFunction(mp1, "tg", &tangens);
+    insertFunction(mp1, "ctg", &cotangens);
+    insertFunction(mp1, "ln", &natlog);
+    insertFunction(mp1, "lg", &tenlog);
+    insertFunction(mp1, "log", &justlog);
+    insertFunction(mp1, "exp", &exponent);
+    insertFunction(mp1, "sqrt", &root);
+    insertFunction(mp1, "pow", &power);
+    insertFunction(mp1, "^", &power);
+    insertFunction(mp1, "abs", &module);
+    insertFunction(mp1, "mag", &module);
+    insertFunction(mp1, "real", &real);
+    insertFunction(mp1, "imag", &imag);
+    insertFunction(mp1, "arg", &argument);
+    insertFunction(mp1, "phase", &argument);
 
 	struct MapComplex mp2[MAP_SIZE];
 	initMapComplex(mp2);
