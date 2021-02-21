@@ -8,9 +8,9 @@
 
 int main() {
 	struct StackVariable *sVar = NULL;
-	pushVariable(&sVar, "B", "C - 12");
-	pushVariable(&sVar, "C", "23");
-	pushVariable(&sVar, "Biba", "B + pow(C, B - 9)");
+	//pushVariable(&sVar, "B", "C - 12");
+	pushVariable(&sVar, "css", "-23+12");
+	pushVariable(&sVar, "Biba", "-123 + 12 - css");
 
 	struct MapFunctions mp1[MAP_SIZE];
 	initMapFunctions(mp1);
@@ -18,6 +18,7 @@ int main() {
 	insertFunction(mp1, "-", &subtract);
 	insertFunction(mp1, "pow", &power);
 	insertFunction(mp1, "^", &power);
+	insertFunction(mp1, "~", &unary);
 
 	struct MapComplex mp2[MAP_SIZE];
 	initMapComplex(mp2);
@@ -33,8 +34,6 @@ int main() {
 		printf("%s = %lf %lfi\n", cur->var.name, creal(getComplex(mp2, cur->var.name)), cimag(getComplex(mp2, cur->var.name)));
 		cur = cur->next;
 	}
-
-
 
 	return 0;
 }

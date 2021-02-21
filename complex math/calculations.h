@@ -14,6 +14,8 @@ void subtract(struct StackComplex **s);
 
 void power(struct StackComplex **s);
 
+void unary(struct StackComplex **s);
+
 short isOperator(char op[OPERATOR_SIZE]);
 
 int operatorPriority(char c[OPERATOR_SIZE]);
