@@ -80,7 +80,7 @@ void sortVariables(struct StackVariable **s, struct MapFunctions m[MAP_SIZE]) {
 	while (cur != NULL) {
 		if (!cur->var.isSorted) {
 			for (int j = 0; j < (cur->var.elements); j++) {
-				if (findFunction(m, cur->var.expression[j]) == INT_MAX &&
+				if (findOperation(m, cur->var.expression[j]) == INT_MAX &&
 				    isalpha(cur->var.expression[j][0])) {
 
 					struct StackVariable *temp = (*s);
@@ -100,7 +100,7 @@ void sortVariables(struct StackVariable **s, struct MapFunctions m[MAP_SIZE]) {
 			}
 			cur->var.isSorted = 1;
 			cur = (*s);
-		}
-		cur = cur->next;
+		} else
+			cur = cur->next;
 	}
 }

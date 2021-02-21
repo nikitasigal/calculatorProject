@@ -3,6 +3,8 @@
 
 #include "../libraries.h"
 #include "../maps/mapFunctions.h"
+#include "../maps/mapComplex.h"
+
 
 #define VAR_NAME_SIZE 10
 #define VAR_EXPR_SIZE 300

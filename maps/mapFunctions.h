@@ -7,14 +7,14 @@
 
 struct MapFunctions {
 	char key[KEY_SIZE];
-	double complex (*function)(struct StackComplex *);
+	void (*function)(struct StackComplex **);
 	short empty;
 };
 
 void initMapFunctions(struct MapFunctions m[MAP_SIZE]);
 
-void insertFunction(struct MapFunctions m[MAP_SIZE], char key[KEY_SIZE], complex double (*ptr)(struct StackComplex *));
+void insertFunction(struct MapFunctions m[MAP_SIZE], char key[KEY_SIZE], void (*ptr)(struct StackComplex **));
 
-unsigned int findFunction(struct MapFunctions m[MAP_SIZE], char key[KEY_SIZE]);
+unsigned int findOperation(struct MapFunctions *m, char key[KEY_SIZE]);
 
 #endif //CALCULATORPROJECT_MAPFUNCTIONS_H

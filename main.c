@@ -4,69 +4,37 @@
 #include "stacks/stackOperator.h"
 #include "maps/mapComplex.h"
 #include "maps/mapFunctions.h"
-
-complex double addition(struct StackComplex *s) {
-	return popComplex(&s) + popComplex(&s);
-}
-
-complex double subtraction(struct StackComplex *s) {
-	return -popComplex(&s) + popComplex(&s);
-}
-
+#include "complex math/calculations.h"
 
 int main() {
-	struct StackComplex *sComp = NULL;
-	pushComplex(&sComp, 15 + 4 * I);
-	pushComplex(&sComp, 13);
-	printf("%lf\n", creal(popComplex(&sComp)));
-	pushComplex(&sComp, 22);
-
-
 	struct StackVariable *sVar = NULL;
-	pushVariable(&sVar, "B", "C-12");
+	pushVariable(&sVar, "B", "C - 12");
 	pushVariable(&sVar, "C", "23");
-	pushVariable(&sVar, "Biba", "B + C - 12");
-	//forwardVariable(&sVar, sVar->next);
-	//struct Variable fgf = popVariable(&sVar);
-	//for (int i = 0; i < fgf.elements; ++i) {
-	//	printf("%s ", fgf.expression[i]);
-	//}
-	//printf("\n");
-
-
-	struct StackOperator *sOp = NULL;
-	pushOperator(&sOp, "+");
-	pushOperator(&sOp, "pow");
-	char temp[300];
-	popOperator(&sOp, temp);
-	printf("%s\n", temp);
-	popOperator(&sOp, temp);
-	printf("%s\n", temp);
-
-
-	struct MapComplex mpComp[MAP_SIZE];
-	initMapComplex(mpComp);
-	insertComplex(mpComp, "abc", 345 - 4 * I);
-	printf("%lf + %lfI\n", creal(getComplex(mpComp, "abc")), cimag(getComplex(mpComp, "abc")));
-
+	pushVariable(&sVar, "Biba", "B + pow(C, B - 9)");
 
 	struct MapFunctions mp1[MAP_SIZE];
 	initMapFunctions(mp1);
-	insertFunction(mp1, "+", &addition);
-	insertFunction(mp1, "-", &subtraction);
-	complex double res = mp1[findFunction(mp1, "+")].function(sComp);
-	printf("%lf + %lfI\n", creal(res), cimag(res));
+	insertFunction(mp1, "+", &add);
+	insertFunction(mp1, "-", &subtract);
+	insertFunction(mp1, "pow", &power);
+	insertFunction(mp1, "^", &power);
 
-
+	struct MapComplex mp2[MAP_SIZE];
+	initMapComplex(mp2);
+	insertComplex(mp2, "i", 0 + 1 * I);
+	insertComplex(mp2, "e", M_E);
+	insertComplex(mp2, "PI", M_PI);
 
 	sortVariables(&sVar, mp1);
 
 	struct StackVariable *cur = sVar;
-	cur = sVar;
 	while (cur != NULL) {
-		printf("%s\n", cur->var.name);
+		insertComplex(mp2, cur->var.name, calculate(mp1, mp2, cur->var));
+		printf("%s = %lf %lfi\n", cur->var.name, creal(getComplex(mp2, cur->var.name)), cimag(getComplex(mp2, cur->var.name)));
 		cur = cur->next;
 	}
+
+
 
 	return 0;
 }

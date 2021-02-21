@@ -1,15 +1,15 @@
 #include "stackOperator.h"
 
-void pushOperator(struct StackOperator **s, char *op) {
+void pushOperation(struct StackOperator **s, char *op) {
 	struct StackOperator *temp = (struct StackOperator *) malloc(sizeof(struct StackOperator));
 	strcpy(temp->op, op);
 	temp->next = *s;
 	*s = temp;
 }
 
-void popOperator(struct StackOperator **s, char *op) {
+void popOperation(struct StackOperator **s, char *op) {
 	if (!(*s)) {
-		printf("Critical error: attempted popOperator() from empty stack\n");
+		printf("Critical error: attempted popOperation() from empty stack\n");
 		exit(EXIT_FAILURE);
 	}
 

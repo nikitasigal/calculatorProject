@@ -6,5 +6,6 @@
 #include <complex.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
 
 #endif //CALCULATORPROJECT_LIBRARIES_H

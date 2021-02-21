@@ -8,7 +8,7 @@ void initMapFunctions(struct MapFunctions m[MAP_SIZE]) {
 	}
 }
 
-void insertFunction(struct MapFunctions m[MAP_SIZE], char key[KEY_SIZE], complex double (*ptr)(struct StackComplex *)) {
+void insertFunction(struct MapFunctions m[MAP_SIZE], char key[KEY_SIZE], void (*ptr)(struct StackComplex **)) {
 	unsigned int id = hash(key);
 
 	if (m[id].empty) {
@@ -34,7 +34,7 @@ void insertFunction(struct MapFunctions m[MAP_SIZE], char key[KEY_SIZE], complex
 }
 
 //Returns the INDEX of the requested function in the map or INT_MAX if the function is not found
-unsigned int findFunction(struct MapFunctions m[MAP_SIZE], char key[KEY_SIZE]) {
+unsigned int findOperation(struct MapFunctions *m, char key[KEY_SIZE]) {
 	unsigned int id = hash(key);
 
 	if (!m[id].empty && !strcmp(m[id].key, key))

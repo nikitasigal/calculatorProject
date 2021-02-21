@@ -9,8 +9,8 @@ struct StackOperator {
 	struct StackOperator *next;
 };
 
-void pushOperator(struct StackOperator **s, char *op);
+void pushOperation(struct StackOperator **s, char *op);
 
-void popOperator(struct StackOperator **s, char *op);
+void popOperation(struct StackOperator **s, char *op);
 
 #endif //CALCULATORPROJECT_STACKOPERATOR_H
