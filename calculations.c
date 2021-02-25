@@ -10,8 +10,8 @@ void tAdd(struct NodeComplex **s) {
 }
 
 void tSubtract(struct NodeComplex **s) {
-	complex double right = popComplex(s);
-	complex double left = popComplex(s);
+	complex long double right = popComplex(s);
+	complex long double left = popComplex(s);
 	pushComplex(s, left - right);
 }
 
@@ -20,8 +20,8 @@ void tMultiply(struct NodeComplex **s) {
 }
 
 void tDivide(struct NodeComplex **s) {
-	complex double right = popComplex(s);
-	complex double left = popComplex(s);
+	complex long double right = popComplex(s);
+	complex long double left = popComplex(s);
 	pushComplex(s, left / right);
 }
 
@@ -50,8 +50,8 @@ void tLg(struct NodeComplex **s) {
 }
 
 void tLog(struct NodeComplex **s) {
-	complex double right = popComplex(s);
-	complex double left = popComplex(s);
+	complex long double right = popComplex(s);
+	complex long double left = popComplex(s);
 	pushComplex(s, clog(right) / clog(left));
 }
 
@@ -64,13 +64,13 @@ void tSqrt(struct NodeComplex **s) {
 }
 
 void tPow(struct NodeComplex **s) {
-	complex double right = popComplex(s);
-	complex double left = popComplex(s);
+	complex long double right = popComplex(s);
+	complex long double left = popComplex(s);
 	pushComplex(s, cpow(left, right));
 }
 
 void tAbs(struct NodeComplex **s) {
-	pushComplex(s, cabs(popComplex(s)));
+	pushComplex(s, cabsl(popComplex(s)));
 }
 
 void tReal(struct NodeComplex **s) {
@@ -85,11 +85,11 @@ void tArg(struct NodeComplex **s) {
 	pushComplex(s, carg(popComplex(s)));
 }
 
-short isOperator(char *op) {
+short isOperator(const char *op) {
 	return (short) (op[0] == '+' || op[0] == '-' || op[0] == '*' || op[0] == '/' || op[0] == '^');
 }
 
-int operatorPriority(char *op) {
+int operatorPriority(const char *op) {
 	switch (op[0]) {
 		case '+':
 		case '-':
@@ -106,7 +106,7 @@ int operatorPriority(char *op) {
 	}
 }
 
-complex double calculate(struct MapOperations opMap[MAP_SIZE], struct MapComplex varMap[MAP_SIZE], struct Variable var) {
+complex long double calculate(struct MapOperations opMap[MAP_SIZE], struct MapComplex varMap[MAP_SIZE], struct Variable var) {
 	struct NodeComplex *valuesStack = NULL;
 	struct NodeOperation *opStack = NULL;
 

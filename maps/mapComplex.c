@@ -8,7 +8,7 @@ void initMapComplex(struct MapComplex m[MAP_SIZE]) {
 	}
 }
 
-void insertComplex(struct MapComplex m[MAP_SIZE], char key[KEY_SIZE], complex double value) {
+void insertComplex(struct MapComplex m[MAP_SIZE], char key[KEY_SIZE], complex long double value) {
 	unsigned int id = hash(key);
 
 	if (m[id].empty) {

@@ -110,12 +110,12 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
     struct NodeVariable *cur = sVar;
     while (cur != NULL) {
         insertComplex(mp2, cur->variable.name, calculate(mp1, mp2, cur->variable));
-        complex double resultVar = mp2[findComplex(mp2, cur->variable.name)].value;
+        complex long double resultVar = mp2[findComplex(mp2, cur->variable.name)].value;
         printf("%s = %lf %lfi\n", cur->variable.name, creal(resultVar), cimag(resultVar));
         cur = cur->next;
     }
 
-    complex double resultValue = mp2[findComplex(mp2, result->variable.name)].value;
+    complex long double resultValue = mp2[findComplex(mp2, result->variable.name)].value;
     char resultAsString[200] = { 0 };
     char realPart[50] = { 0 };
     char imagPart[50] = { 0 };
@@ -194,7 +194,7 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
 
     /*char exp[200] = { 0 };
     strcpy(exp, gtk_entry_get_text(entry));
-    double res = 1; //calculate(exp)
+    long double res = 1; //calculate(exp)
     char resString[100] = { 0 };
     sprintf(resString, "%.6lf", res);
     gtk_entry_set_text(entry, "");
