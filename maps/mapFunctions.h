@@ -2,19 +2,19 @@
 #define CALCULATORPROJECT_MAPFUNCTIONS_H
 
 #include "../libraries.h"
-#include "hashing.h"
 #include "../stacks/stackComplex.h"
+#include "hashing.h"
 
-struct MapFunctions {
+struct MapOperations {
 	char key[KEY_SIZE];
-	void (*function)(struct StackComplex **);
+	void (*operation)(struct NodeComplex **);
 	short empty;
 };
 
-void initMapFunctions(struct MapFunctions m[MAP_SIZE]);
+void initMapOperations(struct MapOperations *m);
 
-void insertFunction(struct MapFunctions m[MAP_SIZE], char key[KEY_SIZE], void (*ptr)(struct StackComplex **));
+void insertOperation(struct MapOperations *m, char *key, void (*ptr)(struct NodeComplex **));
 
-unsigned int findOperation(struct MapFunctions *m, char key[KEY_SIZE]);
+unsigned int findOperation(struct MapOperations m[MAP_SIZE], char key[KEY_SIZE]);
 
 #endif //CALCULATORPROJECT_MAPFUNCTIONS_H

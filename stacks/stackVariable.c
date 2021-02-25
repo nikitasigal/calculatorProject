@@ -1,10 +1,9 @@
 #include "stackVariable.h"
 
-void pushVariable(struct StackVariable **s, char name[VAR_NAME_SIZE], char expression[VAR_EXPR_SIZE]) {
+void pushVariable(struct NodeVariable **s, char name[VAR_NAME_SIZE], char expression[VAR_EXPR_SIZE]) {
 	struct Variable var;
 	strcpy(var.name, name);
 
-	//strcpy(var.expression, expression);
 	var.elements = 0;
 	var.isSorted = 0;
 	for (int i = 0; i < strlen(expression);) {
@@ -25,8 +24,8 @@ void pushVariable(struct StackVariable **s, char name[VAR_NAME_SIZE], char expre
 		}
 	}
 
-	struct StackVariable *temp = (struct StackVariable *) malloc(sizeof(struct StackVariable));
-	temp->var = var;
+	struct NodeVariable *temp = (struct NodeVariable *) malloc(sizeof(struct NodeVariable));
+	temp->variable = var;
 	temp->next = *s;
 
 	if (temp->next)
@@ -35,22 +34,22 @@ void pushVariable(struct StackVariable **s, char name[VAR_NAME_SIZE], char expre
 	*s = temp;
 }
 
-struct Variable popVariable(struct StackVariable **s) {
+struct Variable popVariable(struct NodeVariable **s) {
 	if (!(*s)) {
 		printf("Critical error: attempted popVariable() from empty stack\n");
 		exit(EXIT_FAILURE);
 	}
 
-	struct Variable value = (*s)->var;
-	struct StackVariable *next = (*s)->next;
+	struct Variable var = (*s)->variable;
+	struct NodeVariable *next = (*s)->next;
 	if (next)
 		next->prev = NULL;
 	free(*s);
 	*s = next;
-	return value;
+	return var;
 }
 
-void forwardVariable(struct StackVariable **s, struct StackVariable *cur) {
+void forwardVariable(struct NodeVariable **s, struct NodeVariable *cur) {
 	if (!(*s)) {
 		printf("Critical error: attempted forwardVariable() with empty stack\n");
 		exit(EXIT_FAILURE);
@@ -61,8 +60,8 @@ void forwardVariable(struct StackVariable **s, struct StackVariable *cur) {
 		return;
 	}
 
-	struct StackVariable *prev = cur->prev;
-	struct StackVariable *next = cur->next;
+	struct NodeVariable *prev = cur->prev;
+	struct NodeVariable *next = cur->next;
 
 	prev->next = cur->next;
 	if (next)
@@ -75,32 +74,3 @@ void forwardVariable(struct StackVariable **s, struct StackVariable *cur) {
 	*s = cur;
 }
 
-void sortVariables(struct StackVariable **s, struct MapFunctions m[MAP_SIZE]) {
-	struct StackVariable *cur = (*s);
-	while (cur != NULL) {
-		if (!cur->var.isSorted) {
-			for (int j = 0; j < (cur->var.elements); j++) {
-				if (findOperation(m, cur->var.expression[j]) == INT_MAX &&
-				    isalpha(cur->var.expression[j][0])) {
-
-					struct StackVariable *temp = (*s);
-					while (temp) {
-						if (!strcmp(temp->var.name, cur->var.expression[j])) {
-							forwardVariable(s, temp);
-							break;
-						}
-						temp = temp->next;
-					}
-
-					if (temp == NULL) {
-						printf("Sort() did not find the variable; go fuck yourself!\n");
-						exit(EXIT_FAILURE);
-					}
-				}
-			}
-			cur->var.isSorted = 1;
-			cur = (*s);
-		} else
-			cur = cur->next;
-	}
-}

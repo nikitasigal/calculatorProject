@@ -1,20 +1,20 @@
 #include "stackOperator.h"
 
-void pushOperation(struct StackOperator **s, char *op) {
-	struct StackOperator *temp = (struct StackOperator *) malloc(sizeof(struct StackOperator));
-	strcpy(temp->op, op);
+void pushOperation(struct NodeOperation **s, char operation[OPERATOR_SIZE]) {
+	struct NodeOperation *temp = (struct NodeOperation *) malloc(sizeof(struct NodeOperation));
+	strcpy(temp->operation, operation);
 	temp->next = *s;
 	*s = temp;
 }
 
-void popOperation(struct StackOperator **s, char *op) {
+void popOperation(struct NodeOperation **s, char operation[OPERATOR_SIZE]) {
 	if (!(*s)) {
 		printf("Critical error: attempted popOperation() from empty stack\n");
 		exit(EXIT_FAILURE);
 	}
 
-	strcpy(op, (*s)->op);
-	struct StackOperator *next = (*s)->next;
+	strcpy(operation, (*s)->operation);
+	struct NodeOperation *next = (*s)->next;
 	free(*s);
 	*s = next;
 }

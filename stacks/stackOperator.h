@@ -4,13 +4,13 @@
 #include "../libraries.h"
 
 #define OPERATOR_SIZE 10
-struct StackOperator {
-	char op[OPERATOR_SIZE];
-	struct StackOperator *next;
+struct NodeOperation {
+	char operation[OPERATOR_SIZE];
+	struct NodeOperation *next;
 };
 
-void pushOperation(struct StackOperator **s, char *op);
+void pushOperation(struct NodeOperation **s, char operation[OPERATOR_SIZE]);
 
-void popOperation(struct StackOperator **s, char *op);
+void popOperation(struct NodeOperation **s, char operation[OPERATOR_SIZE]);
 
 #endif //CALCULATORPROJECT_STACKOPERATOR_H

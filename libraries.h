@@ -7,5 +7,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+#include <stdbool.h>
 
 #endif //CALCULATORPROJECT_LIBRARIES_H

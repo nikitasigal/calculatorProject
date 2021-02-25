@@ -2,14 +2,12 @@
 #define CALCULATORPROJECT_STACKVARIABLE_H
 
 #include "../libraries.h"
-#include "../maps/mapFunctions.h"
-#include "../maps/mapComplex.h"
-
 
 #define VAR_NAME_SIZE 10
 #define VAR_EXPR_SIZE 300
 #define VAR_ELEMENT_COUNT 300
 #define VAR_ELEMENT_SIZE 20
+
 struct Variable {
 	char name[VAR_NAME_SIZE];
 	int elements;
@@ -17,17 +15,15 @@ struct Variable {
 	short isSorted;
 };
 
-struct StackVariable {
-	struct Variable var;
-	struct StackVariable *prev, *next;
+struct NodeVariable {
+	struct Variable variable;
+	struct NodeVariable *prev, *next;
 };
 
-void pushVariable(struct StackVariable **s, char name[VAR_NAME_SIZE], char expression[VAR_EXPR_SIZE]);
+void pushVariable(struct NodeVariable **s, char name[VAR_NAME_SIZE], char expression[VAR_EXPR_SIZE]);
 
-struct Variable popVariable(struct StackVariable **s);
+struct Variable popVariable(struct NodeVariable **s);
 
-void forwardVariable(struct StackVariable **s, struct StackVariable *cur);
-
-void sortVariables(struct StackVariable **s, struct MapFunctions m[MAP_SIZE]);
+void forwardVariable(struct NodeVariable **s, struct NodeVariable *cur);
 
 #endif //CALCULATORPROJECT_STACKVARIABLE_H

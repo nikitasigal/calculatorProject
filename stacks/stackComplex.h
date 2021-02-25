@@ -3,13 +3,13 @@
 
 #include "../libraries.h"
 
-struct StackComplex {
+struct NodeComplex {
 	complex double value;
-	struct StackComplex *next;
+	struct NodeComplex *next;
 };
 
-void pushComplex(struct StackComplex **s, complex double value);
+void pushComplex(struct NodeComplex **s, complex double value);
 
-complex double popComplex(struct StackComplex **s);
+complex double popComplex(struct NodeComplex **s);
 
 #endif //CALCULATORPROJECT_STACKCOMPLEX_H

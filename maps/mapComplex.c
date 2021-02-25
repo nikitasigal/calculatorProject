@@ -34,20 +34,19 @@ void insertComplex(struct MapComplex m[MAP_SIZE], char key[KEY_SIZE], complex do
 }
 
 //Returns the VALUE of the requested variable or throws exception if the variable is not found
-complex double getComplex(struct MapComplex m[MAP_SIZE], char key[KEY_SIZE]) {
+unsigned int findComplex(struct MapComplex *m, char key[KEY_SIZE]) {
 	unsigned int id = hash(key);
 
 	if (!m[id].empty && !strcmp(m[id].key, key))
-		return m[id].value;
+		return id;
 
 	unsigned int start = id;
 	id = (id + 1) % MAP_SIZE;
 	while (id != start)
 		if (!m[id].empty && !strcmp(m[id].key, key)) {
-			return m[id].value;
+			return id;
 		} else
 			id = (id + 1) % MAP_SIZE;
 
-	printf("Critical error: value %s is not defined", key);
-	exit(EXIT_FAILURE);
+	return INT_MAX;
 }
