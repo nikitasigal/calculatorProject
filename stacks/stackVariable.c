@@ -18,8 +18,10 @@ void pushVariable(struct NodeVariable **s, char name[VAR_NAME_SIZE], char expres
 				str[crt++] = expression[i++];
 			strcpy(var.expression[var.elements++], str);
 		} else {
-			if (expression[i] != ' ')
-				var.expression[var.elements++][0] = expression[i];
+			if (expression[i] != ' ') {
+                var.expression[var.elements][1] = '\0';
+                var.expression[var.elements++][0] = expression[i];
+            }
 			i++;
 		}
 	}

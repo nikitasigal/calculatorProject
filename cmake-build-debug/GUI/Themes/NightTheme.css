@@ -1,0 +1,88 @@
+#GtkMainBox {
+    background: #181717;
+}
+
+#CalculatorWindow {
+    background: #181717;
+}
+
+#Grid *, #GridBasic * {
+    font: 32px "Segoe UI";
+    color: #d7d7d7;
+}
+
+#Grid button, #GridBasic button {
+    background-image: radial-gradient(ellipse at center, #1a1a1a 0%, black 100%);
+    border-width: 2px;
+    border-radius: 0;
+    border-color: #474747;
+}
+
+#Grid, #GridBasic {
+    background: black;
+    border-radius: 40px;
+}
+
+#ButtonsBox * {
+    font: 20px "Segoe UI";
+    color: #d7d7d7;
+}
+
+#CalculatorSwitcher *, #Variables, #Preferences {
+    background: #0c0c0c;
+    border-radius: 16px;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#CalculatorSwitcher *:checked {
+    background: blue;
+}
+#Variables:checked, #Preferences:checked {
+    background: blue;
+}
+
+#Entry {
+    font: 28px "Segoe UI";
+    background: #0c0c0c;
+    color: #e0e0e0;
+    border-width: 0;
+    border-radius: 24px;
+    box-shadow: none;
+    caret-color: grey;
+}
+
+#Result {
+    font: 58px "Segoe UI Semibold";
+    color: #d7d7d7;
+}
+
+#DeleteButton, #AddButton {
+    font: 24px "Segoe UI";
+    color: #d7d7d7;
+    background: #0e0e0e;
+}
+
+#TreeWindow {
+    border-width: 0;
+}
+
+#Tree header * {
+    font: 20px "Segoe UI";
+    color: #d7d7d7;
+    border-color: #474747;
+    background: #222222;
+    border-radius: 3px;
+}
+
+#Tree {
+    color: #d7d7d7;
+    border-radius: 4px;
+    border-color: #474747;
+    font: 20px "Segoe UI";
+    background: #1c1c1c;
+}
+
+#TreeWindow *:selected {
+    background: blue;
+}

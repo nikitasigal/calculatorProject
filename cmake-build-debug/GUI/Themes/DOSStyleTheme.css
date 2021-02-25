@@ -1,0 +1,113 @@
+#ButtonsBox * {
+    text-shadow: none;
+}
+
+#TreeWindow *:selected {
+    background: yellow;
+}
+
+#Tree header * {
+    background: #0000a9;
+    color: white;
+    font: 20px "More Perfect DOS VGA";
+    border-radius: 0;
+    border-width: 0;
+}
+
+#Tree:hover {
+    background: yellow;
+    color: yellow;
+}
+
+#Tree {
+    color: black;
+    background: blue;
+    font: 24px "More Perfect DOS VGA";
+    border-radius: 0;
+    border-width: 0;
+}
+
+#DeleteButton {
+    border-radius: 0;
+    border-color: yellow;
+    border-width: 4px;
+    font: 20px "More Perfect DOS VGA";
+    color: white;
+}
+#DeleteButton:hover {
+    background: black;
+}
+
+#AddButton {
+    border-radius: 0;
+    border-color: yellow;
+    border-width: 4px;
+    font: 20px "More Perfect DOS VGA";
+    color: white;
+}
+#AddButton:hover {
+    background: black;
+}
+
+#GtkMainBox {
+    background: black;
+}
+
+#Entry {
+    background: #0000a9;
+    color: yellow;
+    font: 36px "More Perfect DOS VGA";
+    border-radius: 0;
+    border-width: 3px;
+    border-color: white;
+}
+
+#Result {
+    color: white;
+    font: 52px "More Perfect DOS VGA";
+}
+
+#Grid, #GridBasic {
+    background: white;
+}
+#Grid *, #GridBasic * {
+    font: 36px "More Perfect DOS VGA";
+    background: #0000a9;
+    border-radius: 0;
+    color: white;
+}
+
+#CalculatorSwitcher * {
+    font: 30px "More Perfect DOS VGA";
+    border-color: white;
+    border-radius: 0;
+    border-width: 3px;
+    color: white;
+    background: black;
+}
+
+#Variables, #Preferences {
+    font: 30px "More Perfect DOS VGA";
+    border-color: white;
+    border-radius: 0;
+    border-width: 3px;
+    background: black;
+    color: white;
+}
+#Variables:checked {
+    border-color: yellow;
+}
+
+#Entry {
+    caret-color: yellow;
+    box-shadow: none;
+}
+
+#CalculatorSwitcher *:checked {
+    background-color: yellow;
+    border-color: yellow;
+}
+
+#CalculatorWindow {
+    background: black;
+}

@@ -1,4 +1,5 @@
 #include "calculations.h"
+#include "gtk/gtk.h"
 
 void tNegate(struct NodeComplex **s) {
 	pushComplex(s, -1 * popComplex(s));
@@ -134,7 +135,7 @@ complex double calculate(struct MapOperations opMap[MAP_SIZE], struct MapComplex
 				IsUnary = false;
 			}
 		} else if (isdigit(var.expression[i][0])) {
-			pushComplex(&valuesStack, strtod(var.expression[i], NULL));
+			pushComplex(&valuesStack, g_strtod(var.expression[i], NULL));
 			IsUnary = false;
 		} else if (isalpha(var.expression[i][0])) {
 			unsigned int id = findOperation(opMap, var.expression[i]);
