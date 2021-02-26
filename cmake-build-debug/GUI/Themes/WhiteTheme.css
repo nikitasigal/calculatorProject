@@ -7,6 +7,11 @@
     border-radius: 40px;
 }
 
+#Grid button, #GridBasic button {
+    background: #d7d7d7;
+    border-radius: 40px;
+}
+
 #Entry {
     font: 28px "Segoe UI";
     border-width: 0;
@@ -19,7 +24,7 @@
 }
 
 #CalculatorSwitcher *, #Variables, #Preferences {
-    font: 20px "Segoe UI";
+    font: 22px "Segoe UI";
     border-color: lightgrey;
     border-radius: 20px;
     border-width: 0;

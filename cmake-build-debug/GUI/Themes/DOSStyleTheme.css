@@ -16,7 +16,6 @@
 
 #Tree:hover {
     background: yellow;
-    color: yellow;
 }
 
 #Tree {
@@ -34,6 +33,7 @@
     font: 20px "More Perfect DOS VGA";
     color: white;
 }
+
 #DeleteButton:hover {
     background: black;
 }
@@ -45,6 +45,7 @@
     font: 20px "More Perfect DOS VGA";
     color: white;
 }
+
 #AddButton:hover {
     background: black;
 }
@@ -70,6 +71,7 @@
 #Grid, #GridBasic {
     background: white;
 }
+
 #Grid *, #GridBasic * {
     font: 36px "More Perfect DOS VGA";
     background: #0000a9;
@@ -94,6 +96,7 @@
     background: black;
     color: white;
 }
+
 #Variables:checked {
     border-color: yellow;
 }
