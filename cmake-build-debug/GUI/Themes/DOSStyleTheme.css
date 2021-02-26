@@ -1,25 +1,26 @@
+#PreferencesWindow {
+    background: white;
+}
+
 #ButtonsBox * {
     text-shadow: none;
 }
 
 #TreeWindow *:selected {
-    background: yellow;
+    background: #54fbfb;
+    color: blue;
 }
 
 #Tree header * {
     background: #0000a9;
-    color: white;
-    font: 20px "More Perfect DOS VGA";
+    color: yellow;
+    font: 22px "More Perfect DOS VGA";
     border-radius: 0;
     border-width: 0;
 }
 
-#Tree:hover {
-    background: yellow;
-}
-
 #Tree {
-    color: black;
+    color: #54fbfb;
     background: blue;
     font: 24px "More Perfect DOS VGA";
     border-radius: 0;
@@ -55,11 +56,11 @@
 }
 
 #Entry {
-    background: #0000a9;
+    background: #0101b8;
     color: yellow;
     font: 36px "More Perfect DOS VGA";
     border-radius: 0;
-    border-width: 3px;
+    border-width: 5px;
     border-color: white;
 }
 
@@ -74,7 +75,12 @@
 
 #Grid *, #GridBasic * {
     font: 36px "More Perfect DOS VGA";
-    background: #0000a9;
+}
+
+#Grid button, #GridBasic button {
+    background: #0101b8;
+    border-width: 1px;
+    border-color: white;
     border-radius: 0;
     color: white;
 }
@@ -92,7 +98,7 @@
     font: 30px "More Perfect DOS VGA";
     border-color: white;
     border-radius: 0;
-    border-width: 3px;
+    border-width: 6px;
     background: black;
     color: white;
 }
@@ -107,8 +113,8 @@
 }
 
 #CalculatorSwitcher *:checked {
-    background-color: yellow;
     border-color: yellow;
+    border-width: 6px;
 }
 
 #CalculatorWindow {

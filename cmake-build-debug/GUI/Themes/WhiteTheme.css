@@ -1,14 +1,18 @@
+#PreferencesWindow {
+    background: white;
+}
+
+#Grid, #GridBasic {
+    border-radius: 40px;
+    background: #f5f5f5;
+}
+
 #Grid *, #GridBasic * {
     font: 32px "Segoe UI";
 }
 
-#Grid, #GridBasic {
-    background: #e5e5e5;
-    border-radius: 40px;
-}
-
 #Grid button, #GridBasic button {
-    background: #d7d7d7;
+    background: #e5e5e5;
     border-radius: 40px;
 }
 

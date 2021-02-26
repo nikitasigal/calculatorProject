@@ -80,7 +80,7 @@
     <property name="icon-name">preferences-color-symbolic</property>
     <signal name="delete-event" handler="Preferences_destroy" swapped="no"/>
     <child>
-      <object class="GtkBox">
+      <object class="GtkBox" id="PreferencesWindow">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
@@ -104,10 +104,16 @@
           </packing>
         </child>
         <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">..\Images\logo.png</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
         </child>
       </object>
     </child>
@@ -143,7 +149,7 @@
     <property name="title" translatable="yes">Алюминий бета: Cyberbonk Edition</property>
     <property name="default-width">1100</property>
     <property name="default-height">480</property>
-    <property name="icon">..\..\..\Desktop\kindpng_6371904.png</property>
+    <property name="icon">..\Images\icon.png</property>
     <signal name="destroy" handler="on_MainWindow_destroy" object="Preferences" swapped="no"/>
     <child>
       <object class="GtkBox">
@@ -166,7 +172,7 @@
                     <property name="name">ButtonsBox</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="border-width">6</property>
+                    <property name="border-width">8</property>
                     <child>
                       <object class="GtkStackSwitcher" id="CalculatorSwitcher">
                         <property name="name">CalculatorSwitcher</property>
@@ -210,7 +216,6 @@
                         <property name="can-focus">True</property>
                         <property name="focus-on-click">False</property>
                         <property name="receives-default">True</property>
-                        <property name="margin-end">2</property>
                         <signal name="clicked" handler="open_preferences" object="Preferences" swapped="no"/>
                         <child>
                           <object class="GtkLabel">
@@ -1811,6 +1816,8 @@
                 <property name="name">TreeWindow</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="margin-end">8</property>
+                <property name="margin-top">8</property>
                 <property name="vexpand">True</property>
                 <property name="hscrollbar-policy">never</property>
                 <property name="shadow-type">in</property>
@@ -1820,8 +1827,6 @@
                     <property name="name">Tree</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="margin-end">8</property>
-                    <property name="margin-top">8</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="hscroll-policy">natural</property>
@@ -1918,6 +1923,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
+                    <property name="margin-end">8</property>
                     <property name="relief">none</property>
                     <signal name="clicked" handler="on_TreeButtonAdd_clicked" object="liststore1" swapped="no"/>
                     <child>
