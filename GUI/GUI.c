@@ -1,6 +1,5 @@
 #include "GUI.h"
 #include "../calculations.h"
-#include "fontconfig/fontconfig.h"
 
 #include <string.h>
 

@@ -267,6 +267,9 @@
                         <property name="name">Entry</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
+                        <property name="has-focus">True</property>
+                        <property name="can-default">True</property>
+                        <property name="has-default">True</property>
                         <property name="margin-start">9</property>
                         <property name="margin-top">7</property>
                         <property name="max-length">200</property>
@@ -1898,7 +1901,7 @@
                     <property name="height-request">65</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
+                    <property name="receives-default">False</property>
                     <property name="relief">none</property>
                     <property name="always-show-image">True</property>
                     <signal name="clicked" handler="on_TreeButtonDelete_clicked" object="TreeSelection" swapped="no"/>
@@ -1922,7 +1925,7 @@
                     <property name="height-request">65</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
+                    <property name="receives-default">False</property>
                     <property name="margin-end">8</property>
                     <property name="relief">none</property>
                     <signal name="clicked" handler="on_TreeButtonAdd_clicked" object="liststore1" swapped="no"/>
