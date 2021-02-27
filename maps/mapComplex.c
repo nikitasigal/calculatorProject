@@ -34,7 +34,7 @@ void insertComplex(struct MapComplex m[MAP_SIZE], char key[KEY_SIZE], complex lo
 }
 
 //Returns the VALUE of the requested variable or throws exception if the variable is not found
-unsigned int findComplex(struct MapComplex *m, char key[KEY_SIZE]) {
+unsigned int findVariable(struct MapComplex *m, char *key) {
 	unsigned int id = hash(key);
 
 	if (!m[id].empty && !strcmp(m[id].key, key))

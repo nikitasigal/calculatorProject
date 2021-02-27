@@ -126,13 +126,13 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
     struct NodeVariable *cur = sVar;
     while (cur != NULL) {
         insertComplex(mp2, cur->variable.name, calculate(mp1, mp2, cur->variable));
-        complex long double resultVar = mp2[findComplex(mp2, cur->variable.name)].value;
+        complex long double resultVar = mp2[findVariable(mp2, cur->variable.name)].value;
         printf("%s = %lf %lfi\n", cur->variable.name, creal(resultVar), cimag(resultVar));
         cur = cur->next;
     }
 
     // Берём посчитанное значение выражения
-    complex long double resultValue = mp2[findComplex(mp2, result->variable.name)].value;
+    complex long double resultValue = mp2[findVariable(mp2, result->variable.name)].value;
     char resultAsString[NUMBER_LENGTH * 2] = {0};
     char realPart[NUMBER_LENGTH] = {0};
     char imagPart[NUMBER_LENGTH] = {0};

@@ -1,5 +1,9 @@
 #include "calculations.h"
 #include "gtk/gtk.h"
+#include "GUI/GUI.h"
+
+bool ERROR = FALSE;
+#define ERROR_SIZE 100
 
 void tNegate(struct NodeComplex **s) {
 	pushComplex(s, -1 * popComplex(s));
@@ -111,7 +115,7 @@ complex long double calculate(struct MapOperations opMap[MAP_SIZE], struct MapCo
 	struct NodeOperation *opStack = NULL;
 
 	bool IsUnary = true;
-	for (int i = 0; i < var.elements; ++i) {
+	for (int i = 0; i < var.elements && !ERROR; ++i) {
 		if (var.expression[i][0] == '(') {
 			pushOperation(&opStack, "(");
 			IsUnary = true;
@@ -140,8 +144,16 @@ complex long double calculate(struct MapOperations opMap[MAP_SIZE], struct MapCo
 		} else if (isalpha(var.expression[i][0])) {
 			unsigned int id = findOperation(opMap, var.expression[i]);
 			if (id == INT_MAX) {
-				pushComplex(&valuesStack, varMap[findComplex(varMap, var.expression[i])].value);
-				IsUnary = false;
+				id = findVariable(varMap, var.expression[i]);
+				if (id != INT_MAX) {
+					pushComplex(&valuesStack, varMap[id].value);
+					IsUnary = false;
+				} else {
+					char msg[ERROR_SIZE] = {0};
+					sprintf(msg, "'%s' is not defined", var.expression[i]);
+					error_message(msg);
+					ERROR = TRUE;
+				}
 			} else
 				pushOperation(&opStack, var.expression[i]);
 		} else if (isOperator(var.expression[i])) {
@@ -171,11 +183,11 @@ complex long double calculate(struct MapOperations opMap[MAP_SIZE], struct MapCo
 
 void sortVariables(struct NodeVariable **s, struct MapOperations opMap[MAP_SIZE], struct MapComplex varMap[MAP_SIZE]) {
 	struct NodeVariable *cur = (*s);
-	while (cur != NULL) {
+	while (cur != NULL && !ERROR) {
 		if (!cur->variable.isSorted) {
-			for (int j = 0; j < (cur->variable.elements); j++) {
+			for (int j = 0; j < (cur->variable.elements) && !ERROR; j++) {
 				if (findOperation(opMap, cur->variable.expression[j]) == INT_MAX &&
-				    findComplex(varMap, cur->variable.expression[j]) == INT_MAX &&
+				    findVariable(varMap, cur->variable.expression[j]) == INT_MAX &&
 				    isalpha(cur->variable.expression[j][0])) {
 
 					struct NodeVariable *temp = (*s);
@@ -188,8 +200,10 @@ void sortVariables(struct NodeVariable **s, struct MapOperations opMap[MAP_SIZE]
 					}
 
 					if (temp == NULL) {
-						printf("Sort() did not find the variable; go fuck yourself!\n");
-						exit(EXIT_FAILURE);
+						char msg[ERROR_SIZE] = {0};
+						sprintf(msg, "'%s' is not defined", cur->variable.expression[j]);
+						error_message(msg);
+						ERROR = TRUE;
 					}
 				}
 			}

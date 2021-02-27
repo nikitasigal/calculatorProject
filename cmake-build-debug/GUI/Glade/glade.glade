@@ -72,83 +72,11 @@
       </object>
     </child>
   </object>
-  <object class="GtkWindow" id="Preferences">
-    <property name="name">PreferencesWindow</property>
-    <property name="can-focus">False</property>
-    <property name="title" translatable="yes"> </property>
-    <property name="resizable">False</property>
-    <property name="icon-name">preferences-color-symbolic</property>
-    <signal name="delete-event" handler="Preferences_destroy" swapped="no"/>
-    <child>
-      <object class="GtkBox" id="PreferencesWindow">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkComboBoxText">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="border-width">29</property>
-            <property name="active">0</property>
-            <items>
-              <item translatable="yes">White theme</item>
-              <item translatable="yes">Night theme</item>
-              <item translatable="yes">DOS-style theme</item>
-            </items>
-            <signal name="changed" handler="change_the_theme" swapped="no"/>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="pixbuf">..\Images\logo.png</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-  </object>
-  <object class="GtkListStore" id="Themes">
-    <columns>
-      <!-- column-name Theme -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">White</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Night</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">DOS</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="liststore1">
-    <columns>
-      <!-- column-name VarName -->
-      <column type="gchararray"/>
-      <!-- column-name VarValue -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
   <object class="GtkWindow" id="MainWindow">
     <property name="name">CalculatorWindow</property>
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">Алюминий бета: Cyberbonk Edition</property>
-    <property name="default-width">1100</property>
-    <property name="default-height">480</property>
+    <property name="default-width">1000</property>
     <property name="icon">..\Images\icon.png</property>
     <signal name="destroy" handler="on_MainWindow_destroy" object="Preferences" swapped="no"/>
     <child>
@@ -160,53 +88,38 @@
             <property name="name">GtkMainBox</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-start">8</property>
+            <property name="margin-end">8</property>
+            <property name="margin-top">8</property>
+            <property name="margin-bottom">8</property>
             <property name="orientation">vertical</property>
             <property name="homogeneous">True</property>
+            <property name="baseline-position">top</property>
             <child>
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="margin-bottom">8</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkBox">
                     <property name="name">ButtonsBox</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="border-width">8</property>
+                    <property name="spacing">5</property>
+                    <property name="baseline-position">top</property>
                     <child>
                       <object class="GtkStackSwitcher" id="CalculatorSwitcher">
                         <property name="name">CalculatorSwitcher</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="halign">start</property>
                         <property name="stack">Calculator2</property>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
+                        <property name="expand">True</property>
                         <property name="fill">True</property>
                         <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkToggleButton">
-                        <property name="name">Variables</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <signal name="toggled" handler="on_variable_button_toggled" object="TreeBox" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Variables</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="pack-type">end</property>
-                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -216,20 +129,20 @@
                         <property name="can-focus">True</property>
                         <property name="focus-on-click">False</property>
                         <property name="receives-default">True</property>
+                        <property name="halign">end</property>
                         <signal name="clicked" handler="open_preferences" object="Preferences" swapped="no"/>
                         <child>
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Preferences</property>
+                            <property name="label">Preferences</property>
                           </object>
                         </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="pack-type">end</property>
-                        <property name="position">3</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                   </object>
@@ -248,6 +161,7 @@
                     <property name="margin-end">20</property>
                     <property name="hexpand">True</property>
                     <property name="label" translatable="yes">0</property>
+                    <property name="wrap">True</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -257,944 +171,51 @@
                 </child>
                 <child>
                   <object class="GtkBox">
-                    <property name="height-request">80</property>
+                    <property name="height-request">42</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="border-width">10</property>
-                    <property name="homogeneous">True</property>
+                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkEntry" id="entry">
                         <property name="name">Entry</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
-                        <property name="has-focus">True</property>
                         <property name="can-default">True</property>
                         <property name="has-default">True</property>
-                        <property name="margin-start">9</property>
-                        <property name="margin-top">7</property>
                         <property name="max-length">200</property>
                         <property name="xalign">0.009999999776482582</property>
                         <property name="placeholder-text" translatable="yes">Enter expression</property>
                         <signal name="key-release-event" handler="on_entry_key_press_event" swapped="no"/>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
+                        <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">0</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
+                <style>
+                  <class name=".back"/>
+                </style>
               </object>
               <packing>
-                <property name="expand">False</property>
+                <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
             <child>
               <object class="GtkStack" id="Calculator2">
-                <property name="name">Stack</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="border-width">8</property>
                 <property name="transition-duration">450</property>
                 <property name="transition-type">over-up-down</property>
-                <child>
-                  <!-- n-columns=5 n-rows=7 -->
-                  <object class="GtkGrid" id="Grid">
-                    <property name="name">Grid</property>
-                    <property name="width-request">550</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="row-spacing">2</property>
-                    <property name="column-spacing">2</property>
-                    <property name="row-homogeneous">True</property>
-                    <property name="column-homogeneous">True</property>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_move_right" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="stock">gtk-go-forward</property>
-                            <property name="icon_size">5</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">6</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="ButtonTest">
-                        <property name="name">test_button</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_log">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">log</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">5</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_ctg">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">ctg</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_cos">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">cos</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_sin">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">sin</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_tg">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">tg</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">3</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_8">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">i</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_1">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">pow</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_abs" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_11">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">|x|</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">2</property>
-                        <property name="top-attach">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_PI" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_12">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">π</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">2</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_14">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">exp</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">3</property>
-                        <property name="top-attach">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_15">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">e</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">3</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_16">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">%</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">4</property>
-                        <property name="top-attach">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <property name="always-show-image">True</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_backspace" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="stock">gtk-clear</property>
-                            <property name="icon_size">5</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">4</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_div" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_17">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">÷</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">4</property>
-                        <property name="top-attach">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_18">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">^</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">3</property>
-                        <property name="top-attach">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_mult" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_19">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">x</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">4</property>
-                        <property name="top-attach">3</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_20">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">-</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">4</property>
-                        <property name="top-attach">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_21">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">=</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">4</property>
-                        <property name="top-attach">6</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_22">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">+</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">4</property>
-                        <property name="top-attach">5</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="name">calc_0</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_24">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">0</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">2</property>
-                        <property name="top-attach">6</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_25">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">1</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">5</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_26">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">4</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_27">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">5</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">2</property>
-                        <property name="top-attach">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_28">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">2</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">2</property>
-                        <property name="top-attach">5</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_29">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">3</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">3</property>
-                        <property name="top-attach">5</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_30">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">6</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">3</property>
-                        <property name="top-attach">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_31">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">9</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">3</property>
-                        <property name="top-attach">3</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_32">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">8</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">2</property>
-                        <property name="top-attach">3</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_33">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">7</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">3</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkToggleButton" id="toggle_button">
-                        <property name="name">secondBar</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <child>
-                          <object class="GtkLabel" id="button_label_68">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">2nd</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="spacing">2</property>
-                        <property name="homogeneous">True</property>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="focus-on-click">False</property>
-                            <property name="receives-default">True</property>
-                            <property name="relief">none</property>
-                            <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                            <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                            <child>
-                              <object class="GtkLabel" id="button_label_23">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">.</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="relief">none</property>
-                            <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                            <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                            <child>
-                              <object class="GtkLabel" id="button_label_34">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">,</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">3</property>
-                        <property name="top-attach">6</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_sqrt" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkLabel" id="button_label_2">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">√</property>
-                            <attributes>
-                              <attribute name="font-desc" value="Segoe UI Semibold, Semi-Bold 22"/>
-                              <attribute name="size" value="23552"/>
-                            </attributes>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="relief">none</property>
-                        <signal name="clicked" handler="on_calculator_button_clicked_move_left" object="entry" swapped="no"/>
-                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="stock">gtk-go-back</property>
-                            <property name="icon_size">5</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">6</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="spacing">2</property>
-                        <property name="homogeneous">True</property>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="focus-on-click">False</property>
-                            <property name="receives-default">True</property>
-                            <property name="relief">none</property>
-                            <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                            <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                            <child>
-                              <object class="GtkLabel" id="button_label_13">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">(</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="focus-on-click">False</property>
-                            <property name="receives-default">True</property>
-                            <property name="relief">none</property>
-                            <signal name="clicked" handler="on_calculator_button_clicked_parentheses" object="entry" swapped="no"/>
-                            <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                            <child>
-                              <object class="GtkLabel" id="button_label_10">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">()</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="focus-on-click">False</property>
-                            <property name="receives-default">True</property>
-                            <property name="relief">none</property>
-                            <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
-                            <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
-                            <child>
-                              <object class="GtkLabel" id="button_label_9">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">)</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">2</property>
-                        <property name="top-attach">2</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="name">Engineering</property>
-                    <property name="title" translatable="yes">Engineering</property>
-                  </packing>
-                </child>
                 <child>
                   <!-- n-columns=4 n-rows=6 -->
                   <object class="GtkGrid" id="GridBasic">
@@ -1790,6 +811,1012 @@
                   <packing>
                     <property name="name">Basic</property>
                     <property name="title" translatable="yes">    Basic    </property>
+                  </packing>
+                </child>
+                <child>
+                  <!-- n-columns=5 n-rows=7 -->
+                  <object class="GtkGrid" id="Grid">
+                    <property name="name">Grid</property>
+                    <property name="width-request">550</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="row-spacing">4</property>
+                    <property name="column-spacing">4</property>
+                    <property name="row-homogeneous">True</property>
+                    <property name="column-homogeneous">True</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_log">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">log</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_ctg">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">ctg</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_cos">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">cos</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_sin">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">sin</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_tg">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">tg</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_8">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">i</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_1">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">pow</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_abs" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_11">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">|x|</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_PI" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_12">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">π</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_14">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">exp</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_15">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">e</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="margin-top">1</property>
+                        <property name="relief">none</property>
+                        <property name="always-show-image">True</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_backspace" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="stock">gtk-clear</property>
+                            <property name="icon_size">5</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">4</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_div" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_17">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">÷</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">4</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_18">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">^</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_mult" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_19">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">x</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">4</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_20">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">-</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">4</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_21">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">=</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="accent"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">4</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_22">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">+</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">4</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="name">calc_0</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_24">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">0</property>
+                            <style>
+                              <class name=".light"/>
+                            </style>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_25">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">1</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_26">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">4</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_27">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">5</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_28">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">2</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_29">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">3</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_30">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">6</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_31">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">9</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_32">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">8</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_33">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">7</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkToggleButton" id="toggle_button">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <child>
+                          <object class="GtkLabel" id="button_label_68">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">2nd</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="spacing">4</property>
+                        <property name="homogeneous">True</property>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="focus-on-click">False</property>
+                            <property name="receives-default">True</property>
+                            <property name="relief">none</property>
+                            <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                            <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                            <child>
+                              <object class="GtkLabel" id="button_label_13">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">(</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="dark"/>
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="focus-on-click">False</property>
+                            <property name="receives-default">True</property>
+                            <property name="relief">none</property>
+                            <signal name="clicked" handler="on_calculator_button_clicked_parentheses" object="entry" swapped="no"/>
+                            <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                            <child>
+                              <object class="GtkLabel" id="button_label_10">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">()</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="dark"/>
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="focus-on-click">False</property>
+                            <property name="receives-default">True</property>
+                            <property name="relief">none</property>
+                            <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                            <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                            <child>
+                              <object class="GtkLabel" id="button_label_9">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">)</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="dark"/>
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="spacing">4</property>
+                        <property name="homogeneous">True</property>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="focus-on-click">False</property>
+                            <property name="receives-default">True</property>
+                            <property name="relief">none</property>
+                            <signal name="clicked" handler="on_calculator_button_clicked_move_left" object="entry" swapped="no"/>
+                            <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="stock">gtk-go-back</property>
+                                <property name="icon_size">5</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="dark"/>
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="focus-on-click">False</property>
+                            <property name="receives-default">True</property>
+                            <property name="relief">none</property>
+                            <signal name="clicked" handler="on_calculator_button_clicked_move_right" object="entry" swapped="no"/>
+                            <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="stock">gtk-go-forward</property>
+                                <property name="icon_size">5</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="dark"/>
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_23">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">.</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_34">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">,</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_sqrt" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_2">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">√</property>
+                            <attributes>
+                              <attribute name="font-desc" value="Segoe UI Semibold, Semi-Bold 22"/>
+                              <attribute name="size" value="23552"/>
+                            </attributes>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">4</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">none</property>
+                        <signal name="clicked" handler="on_calculator_button_clicked_function" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
+                        <child>
+                          <object class="GtkLabel" id="button_label_16">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">root</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="name">Engineering</property>
+                    <property name="title" translatable="yes">Engineering</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
@@ -1802,7 +1829,7 @@
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
@@ -1811,16 +1838,16 @@
           <object class="GtkBox" id="TreeBox">
             <property name="name">TreeBox</property>
             <property name="can-focus">False</property>
-            <property name="no-show-all">True</property>
-            <property name="margin-start">35</property>
+            <property name="margin-start">8</property>
+            <property name="margin-end">8</property>
+            <property name="margin-top">8</property>
+            <property name="margin-bottom">8</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkScrolledWindow">
                 <property name="name">TreeWindow</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="margin-end">8</property>
-                <property name="margin-top">8</property>
                 <property name="vexpand">True</property>
                 <property name="hscrollbar-policy">never</property>
                 <property name="shadow-type">in</property>
@@ -1839,7 +1866,7 @@
                     <property name="enable-search">False</property>
                     <property name="search-column">0</property>
                     <property name="show-expanders">False</property>
-                    <property name="enable-grid-lines">both</property>
+                    <property name="activate-on-single-click">True</property>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection" id="TreeSelection"/>
                     </child>
@@ -1898,7 +1925,6 @@
                 <child>
                   <object class="GtkButton" id="TreeButtonDelete">
                     <property name="name">DeleteButton</property>
-                    <property name="height-request">65</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
@@ -1922,7 +1948,6 @@
                 <child>
                   <object class="GtkButton" id="TreeButtonAdd">
                     <property name="name">AddButton</property>
-                    <property name="height-request">65</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
@@ -1960,5 +1985,76 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkWindow" id="Preferences">
+    <property name="name">PreferencesWindow</property>
+    <property name="can-focus">False</property>
+    <property name="title" translatable="yes"> </property>
+    <property name="resizable">False</property>
+    <property name="icon-name">preferences-color-symbolic</property>
+    <signal name="delete-event" handler="Preferences_destroy" swapped="no"/>
+    <child>
+      <object class="GtkBox" id="PreferencesWindow">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkComboBoxText">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="border-width">29</property>
+            <property name="active">0</property>
+            <items>
+              <item translatable="yes">White theme</item>
+              <item translatable="yes">Night theme</item>
+              <item translatable="yes">DOS-style theme</item>
+            </items>
+            <signal name="changed" handler="change_the_theme" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">..\Images\logo.png</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkListStore" id="Themes">
+    <columns>
+      <!-- column-name Theme -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">White</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Night</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">DOS</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="liststore1">
+    <columns>
+      <!-- column-name VarName -->
+      <column type="gchararray"/>
+      <!-- column-name VarValue -->
+      <column type="gchararray"/>
+    </columns>
   </object>
 </interface>
