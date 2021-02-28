@@ -1,5 +1,30 @@
+#ErrorWindow{
+    background: #171717;
+}
+#ErrorLabel{
+    color: #cacaca;
+    text-shadow: none;
+}
+
+#ErrorButton{
+    color: #cacaca;
+    background: #303030;
+    border-width: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
 #PreferencesWindow {
     background: #171717;
+}
+
+#ThemeSwitcher *{
+    color: #cacaca;
+    background: #303030;
+    border-width: 0;
+    border-radius: 10px;
+    box-shadow: none;
+    text-shadow: none;
 }
 
 #CalculatorWindow {
