@@ -7,7 +7,8 @@
 
 #define NUMBER_LENGTH 50
 
-#include <gtk/gtk.h>
+#include "../calculations.h"
+#include "../errorHandler.h"
 #include "../stacks/stackVariable.h"
 #include "../maps/mapFunctions.h"
 
@@ -48,8 +49,6 @@ G_MODULE_EXPORT void on_calculator_button_clicked_parentheses(GtkWidget *button,
 G_MODULE_EXPORT void on_calculator_button_clicked_PI(GtkWidget *button, GtkEntry *entry);
 
 G_MODULE_EXPORT void open_preferences(GtkButton *button, GtkWindow *window);
-
-G_MODULE_EXPORT void error_message(char *str);
 
 G_MODULE_EXPORT void on_calculator_button_clicked_backspace(GtkWidget *button, GtkEntry *entry);
 

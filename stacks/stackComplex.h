@@ -2,6 +2,7 @@
 #define CALCULATORPROJECT_STACKCOMPLEX_H
 
 #include "../libraries.h"
+#include "../errorHandler.h"
 
 struct NodeComplex {
 	complex long double value;

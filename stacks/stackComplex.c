@@ -9,8 +9,8 @@ void pushComplex(struct NodeComplex **s, complex long double value) {
 
 complex long double popComplex(struct NodeComplex **s) {
 	if (!(*s)) {
-		printf("Critical error: attempted popComplex() from empty stack\n");
-		exit(EXIT_FAILURE);
+		printError("Not enough arguments for calculation");
+		return NAN;
 	}
 
 	complex long double value = (*s)->value;

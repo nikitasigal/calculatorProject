@@ -1,12 +1,9 @@
 #include "GUI.h"
-#include "../calculations.h"
-
-#include <string.h>
 
 GtkWidget *resultLabel;
 GtkListStore *listStore;
-GtkWidget *errorMessage;
-GtkLabel *ErrorLabel;
+GtkWidget *errorWindow;
+GtkLabel *errorLabel;
 GtkCssProvider *css;
 GtkTreeSelection *selection;
 GtkTreeViewColumn *firstColumn;
@@ -26,8 +23,8 @@ void init_GUI() {
     selection = GTK_TREE_SELECTION(gtk_builder_get_object(builder, "TreeSelection"));
     listStore = GTK_LIST_STORE(gtk_builder_get_object(builder, "liststore1"));
     resultLabel = GTK_WIDGET(gtk_builder_get_object(builder, "labelResult"));
-    ErrorLabel = GTK_LABEL(gtk_builder_get_object(builder, "ErrorLabel"));
-    errorMessage = GTK_WIDGET(gtk_builder_get_object(builder, "ErrorWindow"));
+	errorLabel = GTK_LABEL(gtk_builder_get_object(builder, "ErrorLabel"));
+	errorWindow = GTK_WIDGET(gtk_builder_get_object(builder, "ErrorWindow"));
 
     // Ручная настройка кнопки 2nd. Костыль, но это из-за ограничения xml файла с интерфейсом
     GList *list = NULL;
@@ -76,14 +73,15 @@ G_MODULE_EXPORT void labelSetValue(GtkWidget *label, char *result) {
  * Активирование функции calculate. Вызывается при нажатии enter в поле ввода или при нажатии клавиши '='
  */
 G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
+	ERROR = false;
     // Инициализация мапов функций и констант
     struct NodeVariable *sVar = NULL;
     struct MapOperations mp1[MAP_SIZE];
-    initMapOperations(mp1);
+	initOperations(mp1);
     defineOperations(mp1);
 
     struct MapComplex mp2[MAP_SIZE];
-    initMapComplex(mp2);
+	initVariables(mp2);
     defineConstants(mp2);
 
     // Чтение переменных из дерева. Следующие три строчки инициализирует структуру дерева и берёт первый элемент
@@ -106,7 +104,7 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
         }
         // Если нет имени или значения, то это неправильная переменная, выдаём ошибку
         if (!varName || !varValue) {
-            error_message("Incorrect variable name or value");
+            printError("Incorrect variable name or value");
             return;
         }
 
@@ -134,7 +132,7 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
     // Считаем
     struct NodeVariable *cur = sVar;
     while (cur != NULL) {
-        insertComplex(mp2, cur->variable.name, calculate(mp1, mp2, cur->variable));
+    	insertVariable(mp2, cur->variable.name, calculate(mp1, mp2, cur->variable));
         complex long double resultVar = mp2[findVariable(mp2, cur->variable.name)].value;
         printf("%s = %lf %lfi\n", cur->variable.name, creal(resultVar), cimag(resultVar));
         cur = cur->next;
@@ -179,7 +177,7 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
                 strcat(resultAsString, "i");
             }
         } else {
-            strcat(resultAsString, "0");
+	        g_ascii_dtostr(resultAsString, VALUE_LENGTH, resultValue);
         }
     }
 
@@ -353,11 +351,6 @@ G_MODULE_EXPORT void open_preferences(GtkButton *button, GtkWindow *window) {
 /*
  * Вывод сообщения ошибки
  */
-G_MODULE_EXPORT void error_message(char *str) {
-    gtk_label_set_text(ErrorLabel, str);
-    gtk_widget_show(errorMessage);
-    gtk_window_present(GTK_WINDOW(errorMessage));
-}
 
 /*
  * Обработка удаления символа
@@ -369,7 +362,6 @@ G_MODULE_EXPORT void on_calculator_button_clicked_backspace(GtkWidget *button, G
     } else {
         gtk_editable_delete_text(GTK_EDITABLE(entry), position - 1, position);
     }
-    error_message("Test error message");
 }
 
 /*

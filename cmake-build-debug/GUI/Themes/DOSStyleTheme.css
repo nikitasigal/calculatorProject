@@ -14,7 +14,7 @@
 #Tree header * {
     background: #0000a9;
     color: yellow;
-    font: 22px "More Perfect DOS VGA";
+    font: 22px "OCR A Extended";
     border-radius: 0;
     border-width: 0;
 }
@@ -22,7 +22,7 @@
 #Tree {
     color: #54fbfb;
     background: blue;
-    font: 24px "More Perfect DOS VGA";
+    font: 24px "OCR A Extended";
     border-radius: 0;
     border-width: 0;
 }
@@ -31,7 +31,7 @@
     border-radius: 0;
     border-color: yellow;
     border-width: 4px;
-    font: 20px "More Perfect DOS VGA";
+    font: 20px "OCR A Extended";
     color: white;
 }
 
@@ -43,7 +43,7 @@
     border-radius: 0;
     border-color: yellow;
     border-width: 4px;
-    font: 20px "More Perfect DOS VGA";
+    font: 20px "OCR A Extended";
     color: white;
 }
 
@@ -58,7 +58,7 @@
 #Entry {
     background: #0101b8;
     color: yellow;
-    font: 36px "More Perfect DOS VGA";
+    font: 36px "OCR A Extended";
     border-radius: 0;
     border-width: 5px;
     border-color: white;
@@ -66,7 +66,7 @@
 
 #Result {
     color: white;
-    font: 52px "More Perfect DOS VGA";
+    font: 52px "OCR A Extended";
 }
 
 #Grid, #GridBasic {
@@ -74,7 +74,7 @@
 }
 
 #Grid *, #GridBasic * {
-    font: 36px "More Perfect DOS VGA";
+    font: 36px "OCR A Extended";
 }
 
 #Grid button, #GridBasic button {
@@ -86,7 +86,7 @@
 }
 
 #CalculatorSwitcher * {
-    font: 30px "More Perfect DOS VGA";
+    font: 30px "OCR A Extended";
     border-color: white;
     border-radius: 0;
     border-width: 3px;
@@ -95,7 +95,7 @@
 }
 
 #Variables, #Preferences {
-    font: 30px "More Perfect DOS VGA";
+    font: 30px "OCR A Extended";
     border-color: white;
     border-radius: 0;
     border-width: 6px;

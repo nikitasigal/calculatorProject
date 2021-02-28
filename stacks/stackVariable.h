@@ -12,7 +12,7 @@ struct Variable {
 	char name[VAR_NAME_SIZE];
 	int elements;
 	char expression[VAR_ELEMENT_COUNT][VAR_ELEMENT_SIZE];
-	short isSorted;
+	bool isSorted;
 };
 
 struct NodeVariable {

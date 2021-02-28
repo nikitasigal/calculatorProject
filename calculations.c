@@ -1,9 +1,4 @@
 #include "calculations.h"
-#include "gtk/gtk.h"
-#include "GUI/GUI.h"
-
-bool ERROR = FALSE;
-#define ERROR_SIZE 100
 
 void tNegate(struct NodeComplex **s) {
 	pushComplex(s, -1 * popComplex(s));
@@ -73,6 +68,12 @@ void tPow(struct NodeComplex **s) {
 	pushComplex(s, cpow(left, right));
 }
 
+void tRoot(struct NodeComplex **s) {
+	complex long double right = popComplex(s);
+	complex long double left = popComplex(s);
+	pushComplex(s, cpow(left, 1 / right));
+}
+
 void tAbs(struct NodeComplex **s) {
 	pushComplex(s, cabsl(popComplex(s)));
 }
@@ -115,27 +116,30 @@ complex long double calculate(struct MapOperations opMap[MAP_SIZE], struct MapCo
 	struct NodeOperation *opStack = NULL;
 
 	bool IsUnary = true;
-	for (int i = 0; i < var.elements && !ERROR; ++i) {
+	for (int i = 0; i < var.elements; ++i) {
 		if (var.expression[i][0] == '(') {
 			pushOperation(&opStack, "(");
 			IsUnary = true;
 		} else if (var.expression[i][0] == ')' || var.expression[i][0] == ',') {
-			char temp[OPERATOR_SIZE];
-			popOperation(&opStack, temp);
-			while (temp[0] != '(') {
-				opMap[findOperation(opMap, temp)].operation(&valuesStack);
+			char temp[OPERATION_SIZE] = {0};
+			while (opStack && opStack->operation[0] != '(') {
 				popOperation(&opStack, temp);
+				opMap[findOperation(opMap, temp)].operation(&valuesStack);
+			}
+
+			if (!opStack) {
+				printError("Incorrect bracket sequence");
+				continue;
 			}
 
 			if (var.expression[i][0] == ',') {
-				pushOperation(&opStack, "(");
 				IsUnary = true;
 			} else {
 				popOperation(&opStack, temp);
-				if (!isOperator(temp))
+				if (opStack && !isOperator(opStack->operation) && opStack->operation[0] != '(') {
+					popOperation(&opStack, temp);
 					opMap[findOperation(opMap, temp)].operation(&valuesStack);
-				else
-					pushOperation(&opStack, temp);
+				}
 				IsUnary = false;
 			}
 		} else if (isdigit(var.expression[i][0])) {
@@ -151,15 +155,15 @@ complex long double calculate(struct MapOperations opMap[MAP_SIZE], struct MapCo
 				} else {
 					char msg[ERROR_SIZE] = {0};
 					sprintf(msg, "'%s' is not defined", var.expression[i]);
-					error_message(msg);
-					ERROR = TRUE;
+					printError(msg);
+					pushComplex(&valuesStack, NAN);
 				}
 			} else
 				pushOperation(&opStack, var.expression[i]);
 		} else if (isOperator(var.expression[i])) {
 			while (opStack && (opStack->operation[0] != '^' && operatorPriority(var.expression[i]) <= operatorPriority(opStack->operation) ||
 			                   (opStack->operation[0] == '^' && operatorPriority(var.expression[i]) < operatorPriority(opStack->operation)))) {
-				char temp[OPERATOR_SIZE];
+				char temp[OPERATION_SIZE];
 				popOperation(&opStack, temp);
 				opMap[findOperation(opMap, temp)].operation(&valuesStack);
 			}
@@ -167,25 +171,40 @@ complex long double calculate(struct MapOperations opMap[MAP_SIZE], struct MapCo
 			if (IsUnary && var.expression[i][0] == '-') {
 				pushOperation(&opStack, "~");
 			} else pushOperation(&opStack, var.expression[i]);
-			IsUnary = true;
+			IsUnary = false;
+		} else {
+			char msg[ERROR_SIZE] = {0};
+			sprintf(msg, "'%s' is not defined", var.expression[i]);
+			printError(msg);
 		}
 	}
 
 
 	while (opStack) {
-		char temp[OPERATOR_SIZE];
+		char temp[OPERATION_SIZE];
 		popOperation(&opStack, temp);
-		opMap[findOperation(opMap, temp)].operation(&valuesStack);
+		unsigned id = findOperation(opMap, temp);
+		if (id != INT_MAX)
+			opMap[id].operation(&valuesStack);
+		else
+			printError("Incorrect bracket sequence");
 	}
 
-	return valuesStack->value;
+	if (valuesStack)
+		if (valuesStack->next) {
+			printError("Missing operation between operands");
+			return NAN;
+		} else
+			return valuesStack->value;
+	else
+		return NAN;
 }
 
 void sortVariables(struct NodeVariable **s, struct MapOperations opMap[MAP_SIZE], struct MapComplex varMap[MAP_SIZE]) {
 	struct NodeVariable *cur = (*s);
-	while (cur != NULL && !ERROR) {
+	while (cur != NULL) {
 		if (!cur->variable.isSorted) {
-			for (int j = 0; j < (cur->variable.elements) && !ERROR; j++) {
+			for (int j = 0; j < (cur->variable.elements); j++) {
 				if (findOperation(opMap, cur->variable.expression[j]) == INT_MAX &&
 				    findVariable(varMap, cur->variable.expression[j]) == INT_MAX &&
 				    isalpha(cur->variable.expression[j][0])) {
@@ -202,12 +221,11 @@ void sortVariables(struct NodeVariable **s, struct MapOperations opMap[MAP_SIZE]
 					if (temp == NULL) {
 						char msg[ERROR_SIZE] = {0};
 						sprintf(msg, "'%s' is not defined", cur->variable.expression[j]);
-						error_message(msg);
-						ERROR = TRUE;
+						printError(msg);
 					}
 				}
 			}
-			cur->variable.isSorted = 1;
+			cur->variable.isSorted = true;
 			cur = (*s);
 		} else
 			cur = cur->next;
@@ -230,17 +248,18 @@ void defineOperations(struct MapOperations m[MAP_SIZE]) {
 	insertOperation(m, "exp", &tExp);
 	insertOperation(m, "sqrt", &tSqrt);
 	insertOperation(m, "pow", &tPow);
+	insertOperation(m, "root", &tRoot);
 	insertOperation(m, "^", &tPow);
 	insertOperation(m, "abs", &tAbs);
 	insertOperation(m, "mag", &tAbs);
-	insertOperation(m, "tReal", &tReal);
-	insertOperation(m, "tImag", &tImag);
+	insertOperation(m, "real", &tReal);
+	insertOperation(m, "imag", &tImag);
 	insertOperation(m, "arg", &tArg);
 	insertOperation(m, "phase", &tArg);
 }
 
 void defineConstants(struct MapComplex m[MAP_SIZE]) {
-	insertComplex(m, "i", 0 + 1 * I);
-	insertComplex(m, "e", M_E);
-	insertComplex(m, "PI", M_PI);
+	insertVariable(m, "i", 0 + 1 * I);
+	insertVariable(m, "e", M_E);
+	insertVariable(m, "PI", M_PI);
 }

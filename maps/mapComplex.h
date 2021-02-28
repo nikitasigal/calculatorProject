@@ -10,9 +10,9 @@ struct MapComplex {
 	short empty;
 };
 
-void initMapComplex(struct MapComplex m[MAP_SIZE]);
+void initVariables(struct MapComplex *m);
 
-void insertComplex(struct MapComplex m[MAP_SIZE], char key[KEY_SIZE], long double complex value);
+void insertVariable(struct MapComplex *m, char *key, long double complex value);
 unsigned int findVariable(struct MapComplex *m, char *key);
 
 #endif //CALCULATORPROJECT_MAPCOMPLEX_H

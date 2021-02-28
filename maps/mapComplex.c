@@ -1,6 +1,6 @@
 #include "mapComplex.h"
 
-void initMapComplex(struct MapComplex m[MAP_SIZE]) {
+void initVariables(struct MapComplex *m) {
 	for (int i = 0; i < MAP_SIZE; ++i) {
 		m[i].key[0] = 0;
 		m[i].value = 0;
@@ -8,7 +8,7 @@ void initMapComplex(struct MapComplex m[MAP_SIZE]) {
 	}
 }
 
-void insertComplex(struct MapComplex m[MAP_SIZE], char key[KEY_SIZE], complex long double value) {
+void insertVariable(struct MapComplex *m, char *key, complex long double value) {
 	unsigned int id = hash(key);
 
 	if (m[id].empty) {
@@ -29,7 +29,7 @@ void insertComplex(struct MapComplex m[MAP_SIZE], char key[KEY_SIZE], complex lo
 		} else
 			id = (id + 1) % MAP_SIZE;
 
-	printf("Critical error: unable to insertComplex() - possible overflow");
+	printf("Critical error: unable to insertVariable() - possible overflow");
 	exit(EXIT_FAILURE);
 }
 

@@ -1,5 +1,5 @@
 #PreferencesWindow {
-    background: white;
+    background: #e6e6e6;
 }
 
 #CalculatorWindow{
@@ -11,7 +11,7 @@
 }
 
 #Grid *, #GridBasic * {
-    font: 22px "Segoe UI Semibold";
+    font: 20px "Segoe UI Semibold";
     border-radius: 2px;
 }
 
@@ -59,15 +59,24 @@
     border-width: 0;
 }
 
+#TreeWindow *{
+    border-width: 3px;
+    border-color: #e6e6e6;
+}
+
 #TreeWindow *:selected {
     color: black;
     background: #f0f0f0;
+    border-color: lightcoral;
 }
 
 #Tree header * {
     background: #fafafa;
     font: 20px "Segoe UI";
     border-radius: 0;
+    border-width: 0;
+    border-bottom-width: 3px;
+    border-bottom-color: lightcoral;
 }
 
 #Tree {
@@ -75,7 +84,12 @@
     font: 20px "Segoe UI";
 }
 
-#DeleteButton, #AddButton {
-    font: 24px "Segoe UI";
+#Tree *{
+    border-width: 0;
 }
 
+#DeleteButton, #AddButton {
+    border-radius: 0;
+    background: #fafafa;
+    font: 24px "Segoe UI";
+}

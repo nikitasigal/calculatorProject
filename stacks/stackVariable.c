@@ -5,7 +5,7 @@ void pushVariable(struct NodeVariable **s, char name[VAR_NAME_SIZE], char expres
 	strcpy(var.name, name);
 
 	var.elements = 0;
-	var.isSorted = 0;
+	var.isSorted = false;
 	for (int i = 0; i < strlen(expression);) {
 		char str[VAR_ELEMENT_SIZE] = {0};
 		int crt = 0;
@@ -58,7 +58,6 @@ void forwardVariable(struct NodeVariable **s, struct NodeVariable *cur) {
 	}
 
 	if (cur == (*s)) {
-		printf("Potential error: attempted to forwardVariable() which was already in front of the stack\n");
 		return;
 	}
 
