@@ -6,12 +6,15 @@
     background: #e6e6e6;
 }
 
-#Grid, #GridBasic {
-    background: #eaeaea;
+#Grid, #GridBasic{
+    background: #e6e6e6;
 }
 
 #Grid *, #GridBasic * {
-    font: 20px "Segoe UI Semibold";
+    box-shadow: none;
+    text-shadow: none;
+
+    font: 24px "Segoe UI Semibold";
     border-radius: 2px;
 }
 

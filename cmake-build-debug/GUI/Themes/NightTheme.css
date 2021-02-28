@@ -1,95 +1,110 @@
 #PreferencesWindow {
-    background: white;
-}
-
-#GtkMainBox {
-    background: #181717;
+    background: #171717;
 }
 
 #CalculatorWindow {
-    background: #181717;
+    background: #171717;
+}
+
+#Grid, #GridBasic{
+    background: #171717;
 }
 
 #Grid *, #GridBasic * {
-    font: 32px "Segoe UI";
-    color: #d7d7d7;
-}
-
-#Grid button, #GridBasic button {
-    background-image: radial-gradient(ellipse at center, #1a1a1a 0%, black 100%);
-    border-width: 2px;
-    border-radius: 0;
-    border-color: #474747;
-}
-
-#Grid, #GridBasic {
-    background: black;
-    border-radius: 40px;
-}
-
-#ButtonsBox * {
-    font: 22px "Segoe UI";
-    color: #d7d7d7;
-}
-
-#CalculatorSwitcher *, #Variables, #Preferences {
-    background: #0c0c0c;
-    border-radius: 16px;
-    border-width: 0px;
     box-shadow: none;
     text-shadow: none;
+
+    color: #cacaca;
+    font: 24px "Segoe UI Semibold";
+    border-radius: 2px;
 }
 
-#CalculatorSwitcher button:checked {
-    background: #0033d2;
+.light {
+    background: #303030;
 }
 
-#CalculatorSwitcher button:checked * {
-    background: #0033d2;
+.dark {
+    background: #252525;
+}
+
+.accent {
+    background: lightcoral;
 }
 
 #Entry {
-    font: 28px "Segoe UI";
-    background: #0c0c0c;
-    color: #e0e0e0;
+    color: #cacaca;
+    caret-color: #cacaca;
+
+    font: 24px "Segoe UI";
+    background: #252525;
     border-width: 0;
-    border-radius: 24px;
-    box-shadow: none;
-    caret-color: grey;
+    border-radius: 20px;
 }
 
 #Result {
-    font: 58px "Segoe UI Semibold";
-    color: #d7d7d7;
+    color: #cacaca;
+    font: 48px "Segoe UI Semibold";
 }
 
-#DeleteButton, #AddButton {
-    font: 24px "Segoe UI";
-    color: #d7d7d7;
-    background: #0e0e0e;
+#CalculatorSwitcher *, #Variables, #Preferences {
+    box-shadow: none;
+    text-shadow: none;
+    color: #cacaca;
+
+    font: 20px "Segoe UI";
+    background: #252525;
+    border-color: #252525;
+    border-width: 3px;
+    border-radius: 20px;
+}
+
+#CalculatorSwitcher button:checked * {
+    background: lightcoral;
+}
+
+#CalculatorSwitcher button:checked {
+    background: lightcoral;
+    border-color: lightcoral;
 }
 
 #TreeWindow {
+    background: #171717;
     border-width: 0;
 }
 
-#Tree header * {
-    font: 20px "Segoe UI";
-    color: #d7d7d7;
-    border-color: #474747;
-    background: #222222;
-    border-radius: 3px;
-}
-
-#Tree {
-    color: #d7d7d7;
-    border-radius: 4px;
-    border-color: #474747;
-    font: 20px "Segoe UI";
-    background: #1c1c1c;
+#TreeWindow * {
+    border-width: 3px;
+    border-color: #171717;
 }
 
 #TreeWindow *:selected {
-    /*background: #2727db;*/
-    background: #1717a5;
+    color: #cacaca;
+    background: #252525;
+    border-color: lightcoral;
+}
+
+#Tree header * {
+    background: #252525;
+    font: 20px "Segoe UI";
+    border-radius: 0;
+    border-width: 0;
+    border-bottom-width: 3px;
+    border-bottom-color: lightcoral;
+}
+
+#Tree {
+    background: #171717;
+    font: 20px "Segoe UI";
+}
+
+#Tree * {
+    border-width: 0;
+}
+
+#DeleteButton, #AddButton {
+    color: #cacaca;
+
+    border-radius: 0;
+    background: #252525;
+    font: 24px "Segoe UI";
 }
