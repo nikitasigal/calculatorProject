@@ -1,5 +1,5 @@
 #PreferencesWindow {
-    background: #e6e6e6;
+    background: white;
 }
 
 #CalculatorWindow{
@@ -46,9 +46,12 @@
     border-radius: 20px;
 }
 
-#CalculatorSwitcher :checked{
+#CalculatorSwitcher button:checked * {
+    background: lightcoral;
+}
+#CalculatorSwitcher button:checked {
+    background: lightcoral;
     border-color: lightcoral;
-    border-width: 3px;
 }
 
 #TreeWindow {
@@ -65,8 +68,6 @@
     background: #fafafa;
     font: 20px "Segoe UI";
     border-radius: 0;
-    border-width: 2px;
-    border-color: lightcoral;
 }
 
 #Tree {

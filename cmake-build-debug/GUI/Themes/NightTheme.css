@@ -35,18 +35,17 @@
 #CalculatorSwitcher *, #Variables, #Preferences {
     background: #0c0c0c;
     border-radius: 16px;
-    border-width: 2px;
-    border-color: grey;
+    border-width: 0px;
     box-shadow: none;
     text-shadow: none;
 }
 
-#CalculatorSwitcher *:checked {
-    background: blue;
+#CalculatorSwitcher button:checked {
+    background: #0033d2;
 }
 
-#Variables:checked, #Preferences:checked {
-    background: blue;
+#CalculatorSwitcher button:checked * {
+    background: #0033d2;
 }
 
 #Entry {
@@ -91,5 +90,6 @@
 }
 
 #TreeWindow *:selected {
-    background: blue;
+    /*background: #2727db;*/
+    background: #1717a5;
 }

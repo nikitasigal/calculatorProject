@@ -72,6 +72,77 @@
       </object>
     </child>
   </object>
+  <object class="GtkWindow" id="Preferences">
+    <property name="name">PreferencesWindow</property>
+    <property name="can-focus">False</property>
+    <property name="title" translatable="yes"> </property>
+    <property name="resizable">False</property>
+    <property name="icon-name">preferences-color-symbolic</property>
+    <signal name="delete-event" handler="Preferences_destroy" swapped="no"/>
+    <child>
+      <object class="GtkBox" id="PreferencesWindow">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkComboBoxText">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="border-width">29</property>
+            <property name="active">0</property>
+            <items>
+              <item translatable="yes">White theme</item>
+              <item translatable="yes">Night theme</item>
+              <item translatable="yes">DOS-style theme</item>
+            </items>
+            <signal name="changed" handler="change_the_theme" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">..\Images\logo.png</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkListStore" id="Themes">
+    <columns>
+      <!-- column-name Theme -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">White</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Night</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">DOS</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="liststore1">
+    <columns>
+      <!-- column-name VarName -->
+      <column type="gchararray"/>
+      <!-- column-name VarValue -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkWindow" id="MainWindow">
     <property name="name">CalculatorWindow</property>
     <property name="can-focus">False</property>
@@ -222,8 +293,8 @@
                     <property name="name">GridBasic</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="row-spacing">2</property>
-                    <property name="column-spacing">2</property>
+                    <property name="row-spacing">4</property>
+                    <property name="column-spacing">4</property>
                     <property name="row-homogeneous">True</property>
                     <property name="column-homogeneous">True</property>
                     <child>
@@ -244,6 +315,9 @@
                             <property name="icon_size">5</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">3</property>
@@ -267,6 +341,9 @@
                             <property name="label" translatable="yes">0</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
@@ -277,6 +354,7 @@
                       <object class="GtkBox">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="spacing">4</property>
                         <property name="homogeneous">True</property>
                         <child>
                           <object class="GtkButton">
@@ -295,6 +373,9 @@
                                 <property name="icon_size">5</property>
                               </object>
                             </child>
+                            <style>
+                              <class name="light"/>
+                            </style>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -319,6 +400,9 @@
                                 <property name="icon_size">5</property>
                               </object>
                             </child>
+                            <style>
+                              <class name="light"/>
+                            </style>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -349,6 +433,9 @@
                             <property name="label" translatable="yes">1</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -372,6 +459,9 @@
                             <property name="label" translatable="yes">3</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">2</property>
@@ -395,6 +485,9 @@
                             <property name="label" translatable="yes">6</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">2</property>
@@ -418,6 +511,9 @@
                             <property name="label" translatable="yes">5</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
@@ -441,6 +537,9 @@
                             <property name="label" translatable="yes">4</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -464,6 +563,9 @@
                             <property name="label" translatable="yes">7</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -487,6 +589,9 @@
                             <property name="label" translatable="yes">8</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
@@ -510,6 +615,9 @@
                             <property name="label" translatable="yes">9</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">2</property>
@@ -532,6 +640,9 @@
                             <property name="label" translatable="yes">=</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="accent"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">3</property>
@@ -554,6 +665,9 @@
                             <property name="label" translatable="yes">+</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">3</property>
@@ -576,6 +690,9 @@
                             <property name="label" translatable="yes">-</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">3</property>
@@ -598,6 +715,9 @@
                             <property name="label" translatable="yes">x</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">3</property>
@@ -620,6 +740,9 @@
                             <property name="label" translatable="yes">÷</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">3</property>
@@ -642,6 +765,9 @@
                             <property name="label" translatable="yes">(</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -664,6 +790,9 @@
                             <property name="label" translatable="yes">()</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
@@ -686,6 +815,9 @@
                             <property name="label" translatable="yes">)</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">2</property>
@@ -708,6 +840,9 @@
                             <property name="label" translatable="yes">^</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">2</property>
@@ -734,6 +869,9 @@
                             </attributes>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -756,6 +894,9 @@
                             <property name="label" translatable="yes">|x|</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="dark"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
@@ -778,6 +919,9 @@
                             <property name="label" translatable="yes">.</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">2</property>
@@ -801,6 +945,9 @@
                             <property name="label" translatable="yes">2</property>
                           </object>
                         </child>
+                        <style>
+                          <class name="light"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="left-attach">1</property>
@@ -1985,76 +2132,5 @@
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkWindow" id="Preferences">
-    <property name="name">PreferencesWindow</property>
-    <property name="can-focus">False</property>
-    <property name="title" translatable="yes"> </property>
-    <property name="resizable">False</property>
-    <property name="icon-name">preferences-color-symbolic</property>
-    <signal name="delete-event" handler="Preferences_destroy" swapped="no"/>
-    <child>
-      <object class="GtkBox" id="PreferencesWindow">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkComboBoxText">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="border-width">29</property>
-            <property name="active">0</property>
-            <items>
-              <item translatable="yes">White theme</item>
-              <item translatable="yes">Night theme</item>
-              <item translatable="yes">DOS-style theme</item>
-            </items>
-            <signal name="changed" handler="change_the_theme" swapped="no"/>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="pixbuf">..\Images\logo.png</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-  </object>
-  <object class="GtkListStore" id="Themes">
-    <columns>
-      <!-- column-name Theme -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">White</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Night</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">DOS</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="liststore1">
-    <columns>
-      <!-- column-name VarName -->
-      <column type="gchararray"/>
-      <!-- column-name VarValue -->
-      <column type="gchararray"/>
-    </columns>
   </object>
 </interface>

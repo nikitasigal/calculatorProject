@@ -8,6 +8,9 @@ GtkListStore *listStore;
 GtkWidget *errorMessage;
 GtkLabel *ErrorLabel;
 GtkCssProvider *css;
+GtkTreeSelection *selection;
+GtkTreeViewColumn *firstColumn;
+GtkTreeViewColumn *secondColumn;
 GdkScreen *screen;
 
 /*
@@ -18,6 +21,9 @@ void init_GUI() {
     GtkBuilder *builder = gtk_builder_new_from_file("GUI/Glade/glade.glade");
     GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, "MainWindow"));
     GtkToggleButton *toggleButton = GTK_TOGGLE_BUTTON(gtk_builder_get_object(builder, "toggle_button"));
+    firstColumn = GTK_TREE_VIEW_COLUMN(gtk_builder_get_object(builder, "TreeColumnFirst"));
+    secondColumn = GTK_TREE_VIEW_COLUMN(gtk_builder_get_object(builder, "TreeColumnSecond"));
+    selection = GTK_TREE_SELECTION(gtk_builder_get_object(builder, "TreeSelection"));
     listStore = GTK_LIST_STORE(gtk_builder_get_object(builder, "liststore1"));
     resultLabel = GTK_WIDGET(gtk_builder_get_object(builder, "labelResult"));
     ErrorLabel = GTK_LABEL(gtk_builder_get_object(builder, "ErrorLabel"));
@@ -41,6 +47,9 @@ void init_GUI() {
     // Подключение всех сингналов (функций к виджетам) и ручное подключение
     gtk_builder_connect_signals(builder, NULL);
     g_signal_connect(toggleButton, "clicked", G_CALLBACK(toggled_button_clicked), list);
+
+    // Добавление пустой строки в дерево переменных
+    on_TreeButtonAdd_clicked(NULL, listStore);
 
     // Выкладываем все виджеты окна, которые нужно показать, на экран
     gtk_widget_show_all(window);
@@ -142,14 +151,14 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
         strcat(resultAsString, g_ascii_dtostr(realPart, NUMBER_LENGTH, creal(resultValue)));
         if (fabs(fabs(cimag(resultValue)) - 1.0) < EPS) {
             if (cimag(resultValue) < 0) {
-                strcat(resultAsString, " - i");
+                strcat(resultAsString, " -i");
             } else {
                 strcat(resultAsString, " + i");
             }
         } else {
             if (fabs(cimag(resultValue)) > EPS) {
                 if (cimag(resultValue) < 0) {
-                    strcat(resultAsString, " - ");
+                    strcat(resultAsString, " -");
                 } else {
                     strcat(resultAsString, " + ");
                 }
@@ -211,9 +220,25 @@ G_MODULE_EXPORT void on_TreeButtonAdd_clicked(GtkWidget *button, GtkListStore *l
  */
 G_MODULE_EXPORT void
 on_TreeTextFirst_edited(GtkCellRendererText *cell, gchar *path_string, gchar *new_text, gpointer user_data) {
+    if (strlen(new_text) == 0 || !isalpha(new_text[0]) || (strlen(new_text) > 1 && new_text[1] < 0)) {
+        return;
+    }
+
     GtkTreeIter iter;
-    gtk_tree_model_get_iter_from_string(gtk_tree_view_get_model(user_data), &iter, path_string);
+    GtkTreeModel *model = gtk_tree_view_get_model(user_data);
+    gtk_tree_model_get_iter_from_string(model, &iter, path_string);
     gtk_list_store_set(listStore, &iter, 0, new_text, -1);
+
+    GList *listOfSelectedRows = gtk_tree_selection_get_selected_rows(selection, &model);
+    int *index = gtk_tree_path_get_indices(listOfSelectedRows->data);
+    int treeSize = gtk_tree_model_iter_n_children(GTK_TREE_MODEL(listStore), NULL);
+
+    GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
+    if (*index + 1 == treeSize && strlen(new_text) != 0) {
+        GtkTreeView *tree = gtk_tree_selection_get_tree_view(selection);
+        gtk_list_store_append(listStore, &iter);
+        gtk_tree_view_set_cursor_on_cell(tree, path, secondColumn, NULL, 0);
+    }
 }
 
 /*
@@ -221,9 +246,20 @@ on_TreeTextFirst_edited(GtkCellRendererText *cell, gchar *path_string, gchar *ne
  */
 G_MODULE_EXPORT void
 on_TreeTextSecond_edited(GtkCellRendererText *cell, gchar *path_string, gchar *new_text, gpointer user_data) {
+    if (strlen(new_text) == 0 || (strlen(new_text) > 1 && new_text[1] < 0)) {
+        return;
+    }
     GtkTreeIter iter;
-    gtk_tree_model_get_iter_from_string(gtk_tree_view_get_model(user_data), &iter, path_string);
+    GtkTreeModel *model = gtk_tree_view_get_model(user_data);
+    gtk_tree_model_get_iter_from_string(model, &iter, path_string);
     gtk_list_store_set(listStore, &iter, 1, new_text, -1);
+
+    GtkTreeView *tree = gtk_tree_selection_get_tree_view(selection);
+    gboolean valid = gtk_tree_model_iter_next(model, &iter);
+    if (valid) {
+        GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
+        gtk_tree_view_set_cursor(tree, path, firstColumn, 0);
+    }
 }
 
 /*
