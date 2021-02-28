@@ -71,7 +71,7 @@ void tPow(struct NodeComplex **s) {
 void tRoot(struct NodeComplex **s) {
 	complex long double right = popComplex(s);
 	complex long double left = popComplex(s);
-	pushComplex(s, cpow(left, 1 / right));
+	pushComplex(s, cpow(right, 1 / left));
 }
 
 void tAbs(struct NodeComplex **s) {
@@ -190,7 +190,7 @@ complex long double calculate(struct MapOperations opMap[MAP_SIZE], struct MapCo
 			printError("Incorrect bracket sequence");
 	}
 
-	if (valuesStack)
+	if (!ERROR && valuesStack)
 		if (valuesStack->next) {
 			printError("Missing operation between operands");
 			return NAN;

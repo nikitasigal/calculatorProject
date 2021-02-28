@@ -123,23 +123,18 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
     char expression[VALUE_LENGTH] = {0};
     strcpy(expression, gtk_entry_get_text(entry));
     pushVariable(&sVar, "", expression);
-    // Указатель на выражение
-    struct NodeVariable *result = sVar;
 
     // Сортируем
     sortVariables(&sVar, mp1, mp2);
 
     // Считаем
-    struct NodeVariable *cur = sVar;
-    while (cur != NULL) {
-    	insertVariable(mp2, cur->variable.name, calculate(mp1, mp2, cur->variable));
-        complex long double resultVar = mp2[findVariable(mp2, cur->variable.name)].value;
-        printf("%s = %lf %lfi\n", cur->variable.name, creal(resultVar), cimag(resultVar));
-        cur = cur->next;
+    while (sVar) {
+    	struct Variable var = popVariable(&sVar);
+    	insertVariable(mp2, var.name, calculate(mp1, mp2, var));
     }
 
     // Берём посчитанное значение выражения
-    complex long double resultValue = mp2[findVariable(mp2, result->variable.name)].value;
+    complex long double resultValue = mp2[findVariable(mp2, "")].value;
     char resultAsString[NUMBER_LENGTH * 2] = {0};
     char realPart[NUMBER_LENGTH] = {0};
     char imagPart[NUMBER_LENGTH] = {0};
