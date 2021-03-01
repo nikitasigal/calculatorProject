@@ -15,16 +15,19 @@
     background: #e6e6e6;
 }
 
-#ThemeSwitcher *{
+#PreferencesWindow label {
+    font: 20px "Segoe UI Semibold";
+}
+
+#ThemeSwitcherPref *, #CalculatorSwitcherPref * {
+    font: 18px "Segoe UI Symbol";
+    color: black;
+
     background: #fafafa;
     border-width: 0;
     border-radius: 10px;
     box-shadow: none;
     text-shadow: none;
-}
-
-#ThemeSwitcher *:hover{
-    color: black;
 }
 
 #CalculatorWindow{
@@ -81,7 +84,6 @@
     background: lightcoral;
     border-color: lightcoral;
 }
-
 #TreeWindow {
     background: #e6e6e6;
     border-width: 0;
@@ -106,7 +108,6 @@
     border-bottom-width: 3px;
     border-bottom-color: lightcoral;
 }
-
 #Tree {
     background: #e6e6e6;
     font: 20px "Segoe UI";

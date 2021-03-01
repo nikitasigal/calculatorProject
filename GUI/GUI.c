@@ -1,4 +1,5 @@
 #include "GUI.h"
+#include <ctype.h>
 
 GtkWidget *resultLabel;
 GtkListStore *listStore;
@@ -9,6 +10,213 @@ GtkTreeSelection *selection;
 GtkTreeViewColumn *firstColumn;
 GtkTreeViewColumn *secondColumn;
 GdkScreen *screen;
+
+enum State {
+    START,
+    NUMBER,
+    VARIABLE,
+    CLOSE_BRACKET,
+    OPERATOR
+};
+
+bool isIncorrect(char *str, struct MapOperations *mp1) {
+    enum State state = START;
+
+    for (int i = 0; i < strlen(str); ) {
+        // Пропускаем пробелы
+        while (isblank(str[i])) {
+            ++i;
+        }
+
+        if (i < strlen(str) && isdigit(str[i])) {  // Если цифра
+            bool wasDot = false;
+            while (i < strlen(str) && (isalnum(str[i]) || str[i] == '.')) {
+                if (str[i] == '.' && wasDot)
+                    printError("Wrong number format: double-dot in number.");
+                if (str[i] == '.')
+                    wasDot = true;
+                if (isalpha(str[i]))
+                    printError("Wrong variable's name: variable can not start with digit.");
+                ++i;
+            }
+            if (state == NUMBER)
+                printError("Missed operator between numbers.");
+            if (state == VARIABLE)
+                printError("Missed operator between variable and number.");
+            if (state == CLOSE_BRACKET)
+                printError("Missed operator after close bracket.");
+
+            state = NUMBER;
+        } else if (i < strlen(str) && isalpha(str[i])) { // Переменная или функция или константа
+            char curWord[WORD_LENGTH] = { 0 };
+            int curSym = 0;
+            while (i < strlen(str) && !isOperator(&(str[i])) && !isblank(str[i]) && str[i] != '(' && str[i] != ')') {
+                if (!isalnum(str[i])) {
+                    char tempStr[WORD_LENGTH] = "Wrong variable name: incorrect symbol ";
+                    char tempSymbol[2] = { 0 };
+                    tempSymbol[0] = str[i];
+                    strcat(tempStr, tempSymbol);
+                    printError(tempStr);
+                }
+                curWord[curSym++] = str[i++];
+            }
+            if (!strcmp(curWord, "i")) {
+                if (state == NUMBER)
+                    printError("Missed operator between numbers.");
+                if (state == VARIABLE)
+                    printError("Missed operator between variable and number.");
+                if (state == CLOSE_BRACKET)
+                    printError("Missed operator after close bracket.");
+                state = NUMBER;
+                continue;
+            }
+            // Если функция
+            if (findOperation(mp1, curWord) != INT_MAX) {
+                while (isblank(str[i])) {
+                    ++i;
+                }
+                if (str[i] != '(')
+                    printError("Wrong function usage: missed open bracket after function.");
+                else {
+                    if (state == NUMBER) {
+                        printError("Missed operator between number and function.");
+                        return ERROR;
+                    }
+                    if (state == VARIABLE) {
+                        printError("Missed operator between variable and function.");
+                        return ERROR;
+                    }
+                    if (state == CLOSE_BRACKET) {
+                        printError("Missed operator after close bracket.");
+                        return ERROR;
+                    }
+                    state = START;
+                }
+                ++i;
+            } else {    // Переменная
+                if (state == NUMBER) {
+                    printError("Missed operator between number and variable.");
+                    return ERROR;
+                }
+                if (state == VARIABLE) {
+                    printError("Missed operator between variables.");
+                    return ERROR;
+                }
+                if (state == CLOSE_BRACKET) {
+                    printError("Missed operator after close bracket.");
+                    return ERROR;
+                }
+                state = VARIABLE;
+            }
+        } else if (i < strlen(str) && isOperator(&(str[i]))) {
+            if (state == OPERATOR) {
+                printError("Missed number/variable between operators.");
+                return ERROR;
+            }
+            state = OPERATOR;
+            ++i;
+        } else if (str[i] == ')') {
+            if (state == OPERATOR) {
+                printError("Missed number/variable before close bracket.");
+            }
+            state = CLOSE_BRACKET;
+            ++i;
+        } else if (str[i] == '(' || str[i] == ',') {
+            state = START;
+            ++i;
+        } else if (str[i] == '.') {
+            printError("Unexpected dot.");
+            return ERROR;
+        } else {
+            char tempStr[WORD_LENGTH] = "Unknown symbol: ";
+            char tempSymbol[2] = { 0 };
+            tempSymbol[0] = str[i];
+            strcat(tempStr, tempSymbol);
+            printError(tempStr);
+            return ERROR;
+        }
+    }
+    if (state == OPERATOR) {
+        printError("Unfinished expression: missed number after operation.");
+        return ERROR;
+    }
+    if (state == START) {
+        printError("Unfinished expression: unexpected '(' or ',' at the end of expression.");
+        return ERROR;
+    }
+
+    return ERROR;
+}
+
+void setTheme(char *theme) {
+    screen = gdk_screen_get_default();
+    css = gtk_css_provider_new();
+    gtk_css_provider_load_from_path(css, theme, NULL);
+    gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(css), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    g_object_unref(css);
+}
+
+void setCalculatorMode(GtkBuilder *builder, int mode) {
+    GtkStack *calculatorStack = GTK_STACK(gtk_builder_get_object(builder, "CalculatorStack"));
+    GtkWidget *engineering = GTK_WIDGET(gtk_builder_get_object(builder, "Grid"));
+    GtkWidget *basic = GTK_WIDGET(gtk_builder_get_object(builder, "GridBasic"));
+    switch (mode) {
+        case 0:
+            gtk_stack_set_visible_child(calculatorStack, basic);
+            break;
+        case 1:
+            gtk_stack_set_visible_child(calculatorStack, engineering);
+            break;
+        default:
+            printf("WARNING: unknown calculator mode. Rollback to basic.");
+            gtk_stack_set_visible_child(calculatorStack, basic);
+    }
+
+}
+
+bool setUserSettings(GtkBuilder *builder) {
+    FILE *config = fopen("GUI/Settings/config.ini", "r+");
+
+    char argument[INI_ARGUMENT_LENGTH] = { 0 };
+    fgets(argument, INI_ARGUMENT_LENGTH, config);
+
+    char optionName[INI_ARGUMENT_LENGTH] = { 0 };
+    char optionValue[INI_ARGUMENT_LENGTH] = { 0 };
+
+    GtkComboBox *themeChooser = GTK_COMBO_BOX(gtk_builder_get_object(builder, "ThemeChooser"));
+    GtkComboBox *calculatorChooser = GTK_COMBO_BOX(gtk_builder_get_object(builder, "CalculatorChooser"));
+
+    // Активная тема
+    fscanf(config, "%s = %s", argument, optionValue);
+    long index = strtol(optionValue, NULL, 10);
+
+    gtk_combo_box_set_active(themeChooser, index);
+
+    switch (index) {
+        case 0:
+            setTheme("GUI/Themes/WhiteTheme.css");
+            break;
+        case 1:
+            setTheme("GUI/Themes/NightTheme.css");
+            break;
+        case 2:
+            setTheme("GUI/Themes/DOSStyleTheme.css");
+            break;
+        default:
+            printf("WARNING: unknown theme. Rollback to white theme.\n");
+            setTheme("GUI/Themes/WhiteTheme.css");
+    }
+
+    // Режим калькулятора
+    fscanf(config, "%s = %s", argument, optionValue);
+    index = strtol(optionValue, NULL, 10);
+
+    gtk_combo_box_set_active(calculatorChooser, index);
+    setCalculatorMode(builder, index);
+
+
+    return true;
+}
 
 /*
  * Функция инициализирует переменные, требуемые в процессе работы, и устанавливает настройки по умолчанию
@@ -25,6 +233,7 @@ void init_GUI() {
     resultLabel = GTK_WIDGET(gtk_builder_get_object(builder, "labelResult"));
 	errorLabel = GTK_LABEL(gtk_builder_get_object(builder, "ErrorLabel"));
 	errorWindow = GTK_WIDGET(gtk_builder_get_object(builder, "ErrorWindow"));
+	GtkComboBox *themeChooser = GTK_COMBO_BOX(gtk_builder_get_object(builder, "ThemeChooser"));
 
     // Ручная настройка кнопки 2nd. Костыль, но это из-за ограничения xml файла с интерфейсом
     GList *list = NULL;
@@ -35,11 +244,7 @@ void init_GUI() {
     list = g_list_append(list, GTK_LABEL(gtk_builder_get_object(builder, "button_label_log")));
 
     // Установка темы по умолчанию
-    screen = gdk_screen_get_default();
-    css = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(css, "GUI/Themes/WhiteTheme.css", NULL);
-    gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(css), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    g_object_unref(css);
+    setUserSettings(builder);
 
     // Подключение всех сингналов (функций к виджетам) и ручное подключение
     gtk_builder_connect_signals(builder, NULL);
@@ -84,6 +289,8 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
 	initVariables(mp2);
     defineConstants(mp2);
 
+    ERROR = false;
+
     // Чтение переменных из дерева. Следующие три строчки инициализирует структуру дерева и берёт первый элемент
     GtkTreeIter iter;
     GtkTreeModel *treeModel = GTK_TREE_MODEL(listStore);
@@ -111,6 +318,11 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
         // Переходим к следующей строке. valid - переменная типа bool, приобретает значение 0, когда дерево кончается
         valid = gtk_tree_model_iter_next(treeModel, &iter);
 
+        // Предпроверка корректности выражения
+        if (isIncorrect(varValue, mp1)) {
+            return;
+        }
+
         // Пушаем переменную в стек
         pushVariable(&sVar, varName, varValue);
 
@@ -122,6 +334,9 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
     // Теперь берём строку-выражение
     char expression[VALUE_LENGTH] = {0};
     strcpy(expression, gtk_entry_get_text(entry));
+    if (isIncorrect(expression, mp1)) {
+        return;
+    }
     pushVariable(&sVar, "", expression);
 
     // Сортируем
@@ -144,7 +359,7 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
         strcat(resultAsString, g_ascii_dtostr(realPart, NUMBER_LENGTH, creal(resultValue)));
         if (fabs(fabs(cimag(resultValue)) - 1.0) < EPS) {
             if (cimag(resultValue) < 0) {
-                strcat(resultAsString, " -i");
+                strcat(resultAsString, " - i");
             } else {
                 strcat(resultAsString, " + i");
             }
@@ -216,6 +431,11 @@ on_TreeTextFirst_edited(GtkCellRendererText *cell, gchar *path_string, gchar *ne
     if (strlen(new_text) == 0 || !isalpha(new_text[0]) || (strlen(new_text) > 1 && new_text[1] < 0)) {
         return;
     }
+    for (int i = 0; i < strlen(new_text); ++i) {
+        if (!isalnum(new_text[i])) {
+            return;
+        }
+    }
 
     GtkTreeIter iter;
     GtkTreeModel *model = gtk_tree_view_get_model(user_data);
@@ -241,6 +461,11 @@ G_MODULE_EXPORT void
 on_TreeTextSecond_edited(GtkCellRendererText *cell, gchar *path_string, gchar *new_text, gpointer user_data) {
     if (strlen(new_text) == 0 || (strlen(new_text) > 1 && new_text[1] < 0)) {
         return;
+    }
+    for (int i = 0; i < strlen(new_text); ++i) {
+        if (new_text[i] < 0) {
+            return;
+        }
     }
     GtkTreeIter iter;
     GtkTreeModel *model = gtk_tree_view_get_model(user_data);

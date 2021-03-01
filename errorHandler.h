@@ -1,6 +1,8 @@
 #ifndef CALCULATORPROJECT_ERRORHANDLER_H
 #define CALCULATORPROJECT_ERRORHANDLER_H
 
+#define WORD_LENGTH 200
+
 #include "gtk/gtk.h"
 #include <stdbool.h>
 

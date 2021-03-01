@@ -7,6 +7,8 @@
 
 #define NUMBER_LENGTH 50
 
+#define INI_ARGUMENT_LENGTH 100
+
 #include "../calculations.h"
 #include "../errorHandler.h"
 #include "../stacks/stackVariable.h"

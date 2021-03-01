@@ -88,18 +88,74 @@
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkComboBoxText">
-            <property name="name">ThemeSwitcher</property>
+          <object class="GtkFixed">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="border-width">29</property>
-            <property name="active">0</property>
-            <items>
-              <item translatable="yes">White theme</item>
-              <item translatable="yes">Night theme</item>
-              <item translatable="yes">DOS-style theme</item>
-            </items>
-            <signal name="changed" handler="change_the_theme" swapped="no"/>
+            <child>
+              <object class="GtkComboBoxText" id="ThemeChooser">
+                <property name="name">ThemeSwitcherPref</property>
+                <property name="width-request">128</property>
+                <property name="height-request">34</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="border-width">20</property>
+                <property name="active">0</property>
+                <items>
+                  <item id="1" translatable="yes">White theme</item>
+                  <item id="2" translatable="yes">Night theme</item>
+                  <item id="3" translatable="yes">DOS-style theme</item>
+                </items>
+                <signal name="changed" handler="change_the_theme" swapped="no"/>
+              </object>
+              <packing>
+                <property name="x">191</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="CalculatorChooser">
+                <property name="name">CalculatorSwitcherPref</property>
+                <property name="width-request">158</property>
+                <property name="height-request">34</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="border-width">20</property>
+                <property name="active">0</property>
+                <items>
+                  <item id="2" translatable="yes">Basic calculator</item>
+                  <item id="1" translatable="yes">Engineering calculator</item>
+                </items>
+              </object>
+              <packing>
+                <property name="x">190</property>
+                <property name="y">55</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="ThemeChooserLabel">
+                <property name="width-request">48</property>
+                <property name="height-request">38</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Theme</property>
+              </object>
+              <packing>
+                <property name="x">27</property>
+                <property name="y">19</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="CalculatorChooserLabel">
+                <property name="width-request">101</property>
+                <property name="height-request">41</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Default calculator</property>
+              </object>
+              <packing>
+                <property name="x">27</property>
+                <property name="y">70</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -116,7 +172,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>
@@ -145,6 +201,8 @@
       <column type="gchararray"/>
       <!-- column-name VarValue -->
       <column type="gchararray"/>
+      <!-- column-name 5 -->
+      <column type="gint"/>
     </columns>
   </object>
   <object class="GtkWindow" id="MainWindow">
@@ -189,7 +247,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
-                        <property name="stack">Calculator2</property>
+                        <property name="stack">CalculatorStack</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -286,7 +344,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkStack" id="Calculator2">
+              <object class="GtkStack" id="CalculatorStack">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="transition-duration">450</property>

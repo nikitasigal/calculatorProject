@@ -6,7 +6,7 @@
 #define VAR_NAME_SIZE 10
 #define VAR_EXPR_SIZE 300
 #define VAR_ELEMENT_COUNT 300
-#define VAR_ELEMENT_SIZE 20
+#define VAR_ELEMENT_SIZE 200
 
 struct Variable {
 	char name[VAR_NAME_SIZE];

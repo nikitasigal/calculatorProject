@@ -18,9 +18,15 @@
     background: #171717;
 }
 
-#ThemeSwitcher *{
+#PreferencesWindow label {
+    font: 20px "Segoe UI Semibold";
     color: #cacaca;
-    background: #303030;
+}
+
+#ThemeSwitcherPref *, #CalculatorSwitcherPref * {
+    font: 18px "Segoe UI Symbol";
+    color: #cacaca;
+    background: #252525;
     border-width: 0;
     border-radius: 10px;
     box-shadow: none;
