@@ -5,6 +5,9 @@ GtkWidget *resultLabel;
 GtkListStore *listStore;
 GtkWidget *errorWindow;
 GtkLabel *errorLabel;
+GtkLabel *errorLabelWithName;
+GtkComboBox *themeChooser;
+GtkComboBox *calculatorChooser;
 GtkCssProvider *css;
 GtkTreeSelection *selection;
 GtkTreeViewColumn *firstColumn;
@@ -12,6 +15,7 @@ GtkTreeViewColumn *secondColumn;
 GdkScreen *screen;
 
 enum State {
+    BEGINNING,
     START,
     NUMBER,
     VARIABLE,
@@ -19,13 +23,31 @@ enum State {
     OPERATOR
 };
 
+/*
+ * Предпроверка выражения на корректность. Обрабатывает основные простые ошибки в выражении, не удаляет инпут
+ * пользователя и выводит сообщение о том, что пошло не так. Алгоритм таков: идём по выражению, поддерживая текущее
+ * состояние, в котором мы находимся - начало выражения (BEGINNING), начало подвыражения (START), число (NUMBER),
+ * переменная (VARIABLE), закрывающаяся скобка (CLOSE_BRACKET), оператор (OPERATOR). При смене состояния проводится
+ * проверка на совместимость состояний, например, если мы из NUMBER переходим в NUMBER, то явно пропущен оператор,
+ * алгоритм выкидывает ERROR и сообщение об ошибке.
+ *
+ * Основные проверки:
+ * 1) Наличие оператора между числами/переменными/скобками
+ * 2) Наличие двух операндов у оператора
+ * 3) Проверка функции на наличие следом идущей открывающейся скобки
+ * 4) Корректность имени переменной
+ * 5) Корректность числа: отсутствие двойной точки
+ * 6) Отсутствие неожиданно-встреченных символов по типу точки или запятой
+ * 7) Ещё что-то по мелочи, что мне лень писать
+ */
 bool isIncorrect(char *str, struct MapOperations *mp1) {
-    enum State state = START;
+    enum State state = BEGINNING;
 
-    for (int i = 0; i < strlen(str); ) {
+    for (int i = 0; i < strlen(str);) {
         // Пропускаем пробелы
-        while (isblank(str[i])) {
+        if (isblank(str[i])) {
             ++i;
+            continue;
         }
 
         if (i < strlen(str) && isdigit(str[i])) {  // Если цифра
@@ -48,12 +70,13 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
 
             state = NUMBER;
         } else if (i < strlen(str) && isalpha(str[i])) { // Переменная или функция или константа
-            char curWord[WORD_LENGTH] = { 0 };
+            char curWord[WORD_LENGTH] = {0};
             int curSym = 0;
-            while (i < strlen(str) && !isOperator(&(str[i])) && !isblank(str[i]) && str[i] != '(' && str[i] != ')') {
+            while (i < strlen(str) && !isOperator(&(str[i])) && !isblank(str[i]) && str[i] != '(' && str[i] != ')' &&
+                   str[i] != ',') {
                 if (!isalnum(str[i])) {
                     char tempStr[WORD_LENGTH] = "Wrong variable name: incorrect symbol ";
-                    char tempSymbol[2] = { 0 };
+                    char tempSymbol[2] = {0};
                     tempSymbol[0] = str[i];
                     strcat(tempStr, tempSymbol);
                     printError(tempStr);
@@ -108,7 +131,15 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
                 }
                 state = VARIABLE;
             }
-        } else if (i < strlen(str) && isOperator(&(str[i]))) {
+        } else if (i < strlen(str) && isOperator(&(str[i]))) {  // Оператор
+            if (state == BEGINNING && (str[i] != '-')) {
+                printError("Not unary operation at the beginning of expression.");
+                return ERROR;
+            }
+            if (state == START && (str[i] != '-')) {
+                printError("Not unary operation after '(' or ','.");
+                return ERROR;
+            }
             if (state == OPERATOR) {
                 printError("Missed number/variable between operators.");
                 return ERROR;
@@ -118,10 +149,30 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
         } else if (str[i] == ')') {
             if (state == OPERATOR) {
                 printError("Missed number/variable before close bracket.");
+                return ERROR;
+            }
+            if (state == BEGINNING) {
+                printError("Incorrect bracket sequence.");
+                return ERROR;
             }
             state = CLOSE_BRACKET;
             ++i;
-        } else if (str[i] == '(' || str[i] == ',') {
+        } else if (str[i] == '(') {
+            if (state == NUMBER) {
+                printError("Missed operator between number and open bracket.");
+                return ERROR;
+            }
+            if (state == VARIABLE) {
+                printError("Missed operator between variable and open bracket.");
+                return ERROR;
+            }
+            if (state == CLOSE_BRACKET) {
+                printError("Missed operator between brackets.");
+                return ERROR;
+            }
+            state = START;
+            ++i;
+        } else if (str[i] == ',') {
             state = START;
             ++i;
         } else if (str[i] == '.') {
@@ -129,7 +180,7 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
             return ERROR;
         } else {
             char tempStr[WORD_LENGTH] = "Unknown symbol: ";
-            char tempSymbol[2] = { 0 };
+            char tempSymbol[2] = {0};
             tempSymbol[0] = str[i];
             strcat(tempStr, tempSymbol);
             printError(tempStr);
@@ -148,14 +199,38 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
     return ERROR;
 }
 
-void setTheme(char *theme) {
+/*
+ * Установка темы в соответствие с config.ini
+ */
+void setTheme(int mode) {
     screen = gdk_screen_get_default();
     css = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(css, theme, NULL);
+
+    switch (mode) {
+        case 0:
+            gtk_css_provider_load_from_path(css, "GUI/Themes/WhiteTheme.css", NULL);
+            break;
+        case 1:
+            gtk_css_provider_load_from_path(css, "GUI/Themes/NightTheme.css", NULL);
+            break;
+        case 2:
+            gtk_css_provider_load_from_path(css, "GUI/Themes/DOSStyleTheme.css", NULL);
+            break;
+        default:
+            printf("WARNING: unknown theme. Rollback to white theme.\n");
+            gtk_css_provider_load_from_path(css, "GUI/Themes/WhiteTheme.css", NULL);
+            mode = DEFAULT;
+    }
+
     gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(css), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     g_object_unref(css);
+
+    gtk_combo_box_set_active(themeChooser, mode);
 }
 
+/*
+ * Установка режима калькулятора в соответствие с config.ini
+ */
 void setCalculatorMode(GtkBuilder *builder, int mode) {
     GtkStack *calculatorStack = GTK_STACK(gtk_builder_get_object(builder, "CalculatorStack"));
     GtkWidget *engineering = GTK_WIDGET(gtk_builder_get_object(builder, "Grid"));
@@ -170,52 +245,50 @@ void setCalculatorMode(GtkBuilder *builder, int mode) {
         default:
             printf("WARNING: unknown calculator mode. Rollback to basic.");
             gtk_stack_set_visible_child(calculatorStack, basic);
+            mode = DEFAULT;
     }
 
+    gtk_combo_box_set_active(calculatorChooser, mode);
 }
 
-bool setUserSettings(GtkBuilder *builder) {
+/*
+ * Обработка config.ini. Читает файл и устанавливает соответствующие настройки
+ */
+void setUserSettings(GtkBuilder *builder) {
     FILE *config = fopen("GUI/Settings/config.ini", "r+");
 
-    char argument[INI_ARGUMENT_LENGTH] = { 0 };
+    char argument[INI_ARGUMENT_LENGTH] = {0};
     fgets(argument, INI_ARGUMENT_LENGTH, config);
 
-    char optionName[INI_ARGUMENT_LENGTH] = { 0 };
-    char optionValue[INI_ARGUMENT_LENGTH] = { 0 };
-
-    GtkComboBox *themeChooser = GTK_COMBO_BOX(gtk_builder_get_object(builder, "ThemeChooser"));
-    GtkComboBox *calculatorChooser = GTK_COMBO_BOX(gtk_builder_get_object(builder, "CalculatorChooser"));
+    char optionName[INI_ARGUMENT_LENGTH] = {0};
+    char optionValue[INI_ARGUMENT_LENGTH] = {0};
+    long index = DEFAULT;
 
     // Активная тема
-    fscanf(config, "%s = %s", argument, optionValue);
-    long index = strtol(optionValue, NULL, 10);
-
-    gtk_combo_box_set_active(themeChooser, index);
-
-    switch (index) {
-        case 0:
-            setTheme("GUI/Themes/WhiteTheme.css");
-            break;
-        case 1:
-            setTheme("GUI/Themes/NightTheme.css");
-            break;
-        case 2:
-            setTheme("GUI/Themes/DOSStyleTheme.css");
-            break;
-        default:
-            printf("WARNING: unknown theme. Rollback to white theme.\n");
-            setTheme("GUI/Themes/WhiteTheme.css");
+    fscanf(config, "%s = %s", optionName, optionValue);
+    if (!strcmp(optionName, "ActiveTheme")) {
+        index = strtol(optionValue, NULL, 10);
+        setTheme(index);
+    } else {
+        printf("WARNING: incorrect .ini format. Rollback to default settings\n");
+        setTheme(DEFAULT);
+        setCalculatorMode(builder, DEFAULT);
+        return;
     }
 
     // Режим калькулятора
-    fscanf(config, "%s = %s", argument, optionValue);
-    index = strtol(optionValue, NULL, 10);
+    fscanf(config, "%s = %s", optionName, optionValue);
+    if (!strcmp(optionName, "CalculatorDefaultMode")) {
+        index = strtol(optionValue, NULL, 10);
+        setCalculatorMode(builder, index);
+    } else {
+        printf("WARNING: incorrect .ini format. Rollback to default settings\n");
+        setTheme(DEFAULT);
+        setCalculatorMode(builder, DEFAULT);
+        return;
+    }
 
-    gtk_combo_box_set_active(calculatorChooser, index);
-    setCalculatorMode(builder, index);
-
-
-    return true;
+    fclose(config);
 }
 
 /*
@@ -231,9 +304,11 @@ void init_GUI() {
     selection = GTK_TREE_SELECTION(gtk_builder_get_object(builder, "TreeSelection"));
     listStore = GTK_LIST_STORE(gtk_builder_get_object(builder, "liststore1"));
     resultLabel = GTK_WIDGET(gtk_builder_get_object(builder, "labelResult"));
-	errorLabel = GTK_LABEL(gtk_builder_get_object(builder, "ErrorLabel"));
-	errorWindow = GTK_WIDGET(gtk_builder_get_object(builder, "ErrorWindow"));
-	GtkComboBox *themeChooser = GTK_COMBO_BOX(gtk_builder_get_object(builder, "ThemeChooser"));
+    errorLabel = GTK_LABEL(gtk_builder_get_object(builder, "ErrorLabel"));
+    errorLabelWithName = GTK_LABEL(gtk_builder_get_object(builder, "ErrorLabelWithName"));
+    errorWindow = GTK_WIDGET(gtk_builder_get_object(builder, "ErrorWindow"));
+    themeChooser = GTK_COMBO_BOX(gtk_builder_get_object(builder, "ThemeChooser"));
+    calculatorChooser = GTK_COMBO_BOX(gtk_builder_get_object(builder, "CalculatorChooser"));
 
     // Ручная настройка кнопки 2nd. Костыль, но это из-за ограничения xml файла с интерфейсом
     GList *list = NULL;
@@ -261,9 +336,28 @@ void init_GUI() {
 }
 
 /*
+ * Сохранение настроек в config.ini
+ */
+void save() {
+    FILE *config = fopen("GUI/Settings/config.ini", "w");
+
+    fprintf(config, "%s\n", "[PreferencesWindow]");
+    int index;
+
+    // Активная тема
+    index = gtk_combo_box_get_active(themeChooser);
+    fprintf(config, "%s%d\n", "ActiveTheme = ", index);
+
+    // Режим калькулятора
+    index = gtk_combo_box_get_active(calculatorChooser);
+    fprintf(config, "%s%d", "CalculatorDefaultMode = ", index);
+}
+
+/*
  * Остановка программы при закрытии главного окна
  */
 G_MODULE_EXPORT void on_MainWindow_destroy() {
+    save();
     gtk_main_quit();
 }
 
@@ -278,18 +372,20 @@ G_MODULE_EXPORT void labelSetValue(GtkWidget *label, char *result) {
  * Активирование функции calculate. Вызывается при нажатии enter в поле ввода или при нажатии клавиши '='
  */
 G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
-	ERROR = false;
+    // Очистка статических переменных
+    ERROR = false;
+    gtk_label_set_text(errorLabelWithName, "");
+    gtk_label_set_text(errorLabel, "");
+
     // Инициализация мапов функций и констант
     struct NodeVariable *sVar = NULL;
     struct MapOperations mp1[MAP_SIZE];
-	initOperations(mp1);
+    initOperations(mp1);
     defineOperations(mp1);
 
     struct MapComplex mp2[MAP_SIZE];
-	initVariables(mp2);
+    initVariables(mp2);
     defineConstants(mp2);
-
-    ERROR = false;
 
     // Чтение переменных из дерева. Следующие три строчки инициализирует структуру дерева и берёт первый элемент
     GtkTreeIter iter;
@@ -320,6 +416,12 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
 
         // Предпроверка корректности выражения
         if (isIncorrect(varValue, mp1)) {
+            char errorMsg[WORD_LENGTH] = {0};
+            strcat(errorMsg, "Mistake in value of variable '");
+            strcat(errorMsg, varName);
+            strcat(errorMsg, "'.");
+            gtk_label_set_text(errorLabelWithName, errorMsg);
+            gtk_label_set_text(GTK_LABEL(resultLabel), "nan");
             return;
         }
 
@@ -335,6 +437,10 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
     char expression[VALUE_LENGTH] = {0};
     strcpy(expression, gtk_entry_get_text(entry));
     if (isIncorrect(expression, mp1)) {
+        char errorMsg[WORD_LENGTH] = {0};
+        strcat(errorMsg, "Mistake in expression.");
+        gtk_label_set_text(errorLabelWithName, errorMsg);
+        gtk_label_set_text(GTK_LABEL(resultLabel), "nan");
         return;
     }
     pushVariable(&sVar, "", expression);
@@ -344,8 +450,8 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
 
     // Считаем
     while (sVar) {
-    	struct Variable var = popVariable(&sVar);
-    	insertVariable(mp2, var.name, calculate(mp1, mp2, var));
+        struct Variable var = popVariable(&sVar);
+        insertVariable(mp2, var.name, calculate(mp1, mp2, var));
     }
 
     // Берём посчитанное значение выражения
@@ -387,12 +493,13 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
                 strcat(resultAsString, "i");
             }
         } else {
-	        g_ascii_dtostr(resultAsString, VALUE_LENGTH, resultValue);
+            g_ascii_dtostr(resultAsString, VALUE_LENGTH, resultValue);
         }
     }
 
     // Посчитали. Очищаем поле ввода и выводим ответ на экран
-    gtk_entry_set_text(entry, "");
+    if (!ERROR)
+        gtk_entry_set_text(entry, "");
     gtk_label_set_text(GTK_LABEL(resultLabel), resultAsString);
 }
 

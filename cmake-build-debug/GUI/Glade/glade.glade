@@ -21,24 +21,44 @@
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel" id="ErrorLabel">
-            <property name="name">ErrorLabel</property>
+          <object class="GtkFixed">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-top">20</property>
-            <property name="margin-bottom">15</property>
-            <property name="wrap">True</property>
-            <property name="xalign">0.5</property>
-            <property name="yalign">0.5</property>
-            <attributes>
-              <attribute name="font-desc" value="Sans 10"/>
-              <attribute name="size" value="14336"/>
-            </attributes>
+            <child>
+              <object class="GtkLabel" id="ErrorLabelWithName">
+                <property name="name">ErrorLabelWithName</property>
+                <property name="width-request">450</property>
+                <property name="height-request">33</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-top">20</property>
+                <property name="justify">center</property>
+                <property name="wrap">True</property>
+                <property name="xalign">0.5</property>
+                <property name="yalign">0.5</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="ErrorLabel">
+                <property name="name">ErrorLabel</property>
+                <property name="width-request">450</property>
+                <property name="height-request">32</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-bottom">60</property>
+                <property name="justify">center</property>
+                <property name="wrap">True</property>
+                <property name="xalign">0.5</property>
+                <property name="yalign">0.5</property>
+              </object>
+              <packing>
+                <property name="y">71</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="padding">50</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -52,6 +72,7 @@
             <property name="receives-default">True</property>
             <property name="margin-start">30</property>
             <property name="margin-end">30</property>
+            <property name="margin-bottom">5</property>
             <property name="border-width">4</property>
             <signal name="clicked" handler="ErrorWindow_destroy" object="ErrorWindow" swapped="no"/>
             <child>
@@ -69,7 +90,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>
@@ -194,6 +215,25 @@
         <col id="0" translatable="yes">DOS</col>
       </row>
     </data>
+  </object>
+  <object class="GtkWindow">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
   </object>
   <object class="GtkListStore" id="liststore1">
     <columns>

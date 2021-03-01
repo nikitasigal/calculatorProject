@@ -1,12 +1,14 @@
-#ErrorWindow{
+#ErrorWindow {
     background: #171717;
 }
-#ErrorLabel{
+
+#ErrorWindow label {
+    font: 20px "Segoe UI Semibold";
     color: #cacaca;
     text-shadow: none;
 }
 
-#ErrorButton{
+#ErrorButton {
     color: #cacaca;
     background: #303030;
     border-width: 0;
@@ -37,7 +39,7 @@
     background: #171717;
 }
 
-#Grid, #GridBasic{
+#Grid, #GridBasic {
     background: #171717;
 }
 
@@ -126,6 +128,7 @@
 #Tree {
     background: #171717;
     font: 20px "Segoe UI";
+    color: #cacaca;
 }
 
 #Tree * {

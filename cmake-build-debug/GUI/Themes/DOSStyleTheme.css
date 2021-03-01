@@ -2,6 +2,44 @@
     background: white;
 }
 
+#ErrorWindow {
+    background: black;
+}
+
+#ErrorWindow label {
+    font: 20px "OCR A Extended";
+    color: #54fbfb;
+    text-shadow: none;
+}
+
+#ErrorButton {
+    color: #54fbfb;
+    font: 22px "OCR A Extended";
+    background: blue;
+    border-width: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#PreferencesWindow {
+    background: blue;
+}
+
+#PreferencesWindow label {
+    font: 16px "OCR A Extended";;
+    color: white;
+}
+
+#ThemeSwitcherPref *, #CalculatorSwitcherPref * {
+    font: 18px "OCR A Extended";
+    color: white;
+    background: #0000a9;
+    border-width: 0;
+    border-radius: 10px;
+    box-shadow: none;
+    text-shadow: none;
+}
+
 #ButtonsBox * {
     text-shadow: none;
 }
@@ -22,7 +60,7 @@
 #Tree {
     color: #54fbfb;
     background: blue;
-    font: 24px "OCR A Extended";
+    font: 22px "OCR A Extended";
     border-radius: 0;
     border-width: 0;
 }
@@ -58,7 +96,7 @@
 #Entry {
     background: #0101b8;
     color: yellow;
-    font: 36px "OCR A Extended";
+    font: 22px "OCR A Extended";
     border-radius: 0;
     border-width: 5px;
     border-color: white;
@@ -74,7 +112,9 @@
 }
 
 #Grid *, #GridBasic * {
-    font: 36px "OCR A Extended";
+    font: 24px "OCR A Extended";
+    text-shadow: none;
+    box-shadow: none;
 }
 
 #Grid button, #GridBasic button {
@@ -86,7 +126,7 @@
 }
 
 #CalculatorSwitcher * {
-    font: 30px "OCR A Extended";
+    font: 24px "OCR A Extended";
     border-color: white;
     border-radius: 0;
     border-width: 3px;
@@ -94,8 +134,9 @@
     background: black;
 }
 
+
 #Variables, #Preferences {
-    font: 30px "OCR A Extended";
+    font: 24px "OCR A Extended";
     border-color: white;
     border-radius: 0;
     border-width: 6px;
