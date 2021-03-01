@@ -61,7 +61,7 @@
 }
 
 .accent {
-    background: lightcoral;
+    background: #018c77;
 }
 
 #Entry {
@@ -92,12 +92,12 @@
 }
 
 #CalculatorSwitcher button:checked * {
-    background: lightcoral;
+    background: #018c77;
 }
 
 #CalculatorSwitcher button:checked {
-    background: lightcoral;
-    border-color: lightcoral;
+    background: #018c77;
+    border-color: #018c77;
 }
 
 #TreeWindow {
@@ -113,7 +113,7 @@
 #TreeWindow *:selected {
     color: #cacaca;
     background: #252525;
-    border-color: lightcoral;
+    border-color: #018c77;
 }
 
 #Tree header * {
@@ -122,7 +122,7 @@
     border-radius: 0;
     border-width: 0;
     border-bottom-width: 3px;
-    border-bottom-color: lightcoral;
+    border-bottom-color: #018c77;
 }
 
 #Tree {
@@ -137,6 +137,7 @@
 
 #DeleteButton, #AddButton {
     color: #cacaca;
+    text-shadow: none;
 
     border-radius: 0;
     background: #252525;
