@@ -53,21 +53,39 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
         if (i < strlen(str) && isdigit(str[i])) {  // Если цифра
             bool wasDot = false;
             while (i < strlen(str) && (isalnum(str[i]) || str[i] == '.')) {
-                if (str[i] == '.' && wasDot)
-                    printError("Wrong number format: double-dot in number.");
-                if (str[i] == '.')
+                if (str[i] == '.') {
+                    if (wasDot) {
+                        printError("Wrong number format: double-dot in number.");
+                        return ERROR;
+                    }
+
                     wasDot = true;
-                if (isalpha(str[i]))
+                    ++i;
+
+                    if (!isdigit(str[i])) {
+                        printError("Wrong number format: incorrect fractional part of the number.");
+                        return ERROR;
+                    }
+                }
+                if (isalpha(str[i])) {
                     printError("Wrong variable's name: variable can not start with digit.");
+                    return ERROR;
+                }
                 ++i;
             }
-            if (state == NUMBER)
-                printError("Missed operator between numbers.");
-            if (state == VARIABLE)
-                printError("Missed operator between variable and number.");
-            if (state == CLOSE_BRACKET)
-                printError("Missed operator after close bracket.");
-
+            switch (state) {
+                case NUMBER:
+                    printError("Missed operator between numbers.");
+                    return ERROR;
+                case VARIABLE:
+                    printError("Missed operator between variable and number.");
+                    return ERROR;
+                case CLOSE_BRACKET:
+                    printError("Missed operator after close bracket.");
+                    return ERROR;
+                default:
+                    break;
+            }
             state = NUMBER;
         } else if (i < strlen(str) && isalpha(str[i])) { // Переменная или функция или константа
             char curWord[WORD_LENGTH] = {0};
@@ -84,12 +102,19 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
                 curWord[curSym++] = str[i++];
             }
             if (!strcmp(curWord, "i")) {
-                if (state == NUMBER)
-                    printError("Missed operator between numbers.");
-                if (state == VARIABLE)
-                    printError("Missed operator between variable and number.");
-                if (state == CLOSE_BRACKET)
-                    printError("Missed operator after close bracket.");
+                switch (state) {
+                    case NUMBER:
+                        printError("Missed operator between numbers.");
+                        return ERROR;
+                    case VARIABLE:
+                        printError("Missed operator between variable and number.");
+                        return ERROR;
+                    case CLOSE_BRACKET:
+                        printError("Missed operator after close bracket.");
+                        return ERROR;
+                    default:
+                        break;
+                }
                 state = NUMBER;
                 continue;
             }
@@ -101,33 +126,35 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
                 if (str[i] != '(')
                     printError("Wrong function usage: missed open bracket after function.");
                 else {
-                    if (state == NUMBER) {
-                        printError("Missed operator between number and function.");
-                        return ERROR;
-                    }
-                    if (state == VARIABLE) {
-                        printError("Missed operator between variable and function.");
-                        return ERROR;
-                    }
-                    if (state == CLOSE_BRACKET) {
-                        printError("Missed operator after close bracket.");
-                        return ERROR;
+                    switch (state) {
+                        case NUMBER:
+                            printError("Missed operator between number and function.");
+                            return ERROR;
+                        case VARIABLE:
+                            printError("Missed operator between variable and function.");
+                            return ERROR;
+                        case CLOSE_BRACKET:
+                            printError("Missed operator after close bracket.");
+                            return ERROR;
+                        default:
+                            break;
                     }
                     state = START;
                 }
                 ++i;
             } else {    // Переменная
-                if (state == NUMBER) {
-                    printError("Missed operator between number and variable.");
-                    return ERROR;
-                }
-                if (state == VARIABLE) {
-                    printError("Missed operator between variables.");
-                    return ERROR;
-                }
-                if (state == CLOSE_BRACKET) {
-                    printError("Missed operator after close bracket.");
-                    return ERROR;
+                switch (state) {
+                    case NUMBER:
+                        printError("Missed operator between number and variable.");
+                        return ERROR;
+                    case VARIABLE:
+                        printError("Missed operator between variables.");
+                        return ERROR;
+                    case CLOSE_BRACKET:
+                        printError("Missed operator after close bracket.");
+                        return ERROR;
+                    default:
+                        break;
                 }
                 state = VARIABLE;
             }
@@ -137,7 +164,7 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
                 return ERROR;
             }
             if (state == START && (str[i] != '-')) {
-                printError("Not unary operation after '(' or ','.");
+                printError("Not unary operation after '(' or ',' .");
                 return ERROR;
             }
             if (state == OPERATOR) {
@@ -147,28 +174,31 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
             state = OPERATOR;
             ++i;
         } else if (str[i] == ')') {
-            if (state == OPERATOR) {
-                printError("Missed number/variable before close bracket.");
-                return ERROR;
-            }
-            if (state == BEGINNING) {
-                printError("Incorrect bracket sequence.");
-                return ERROR;
+            switch (state) {
+                case OPERATOR:
+                    printError("Missed number/variable before close bracket.");
+                    return ERROR;
+                case BEGINNING:
+                    printError("Incorrect bracket sequence.");
+                    return ERROR;
+                default:
+                    break;
             }
             state = CLOSE_BRACKET;
             ++i;
         } else if (str[i] == '(') {
-            if (state == NUMBER) {
-                printError("Missed operator between number and open bracket.");
-                return ERROR;
-            }
-            if (state == VARIABLE) {
-                printError("Missed operator between variable and open bracket.");
-                return ERROR;
-            }
-            if (state == CLOSE_BRACKET) {
-                printError("Missed operator between brackets.");
-                return ERROR;
+            switch (state) {
+                case NUMBER:
+                    printError("Missed operator between number and open bracket.");
+                    return ERROR;
+                case VARIABLE:
+                    printError("Missed operator between variable and open bracket.");
+                    return ERROR;
+                case CLOSE_BRACKET:
+                    printError("Missed operator between brackets.");
+                    return ERROR;
+                default:
+                    break;
             }
             state = START;
             ++i;

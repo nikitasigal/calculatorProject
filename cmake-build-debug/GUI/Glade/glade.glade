@@ -10,10 +10,12 @@
     <property name="title" translatable="yes">ERROR</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
+    <property name="window-position">center</property>
     <property name="default-width">200</property>
     <property name="default-height">100</property>
     <property name="icon-name">edit-delete-symbolic</property>
     <property name="urgency-hint">True</property>
+    <property name="gravity">static</property>
     <signal name="delete-event" handler="Preferences_destroy" swapped="no"/>
     <child>
       <object class="GtkBox">
@@ -34,6 +36,7 @@
                 <property name="margin-top">20</property>
                 <property name="justify">center</property>
                 <property name="wrap">True</property>
+                <property name="max-width-chars">40</property>
                 <property name="xalign">0.5</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -42,12 +45,14 @@
               <object class="GtkLabel" id="ErrorLabel">
                 <property name="name">ErrorLabel</property>
                 <property name="width-request">450</property>
-                <property name="height-request">32</property>
+                <property name="height-request">34</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-bottom">60</property>
+                <property name="margin-top">5</property>
+                <property name="margin-bottom">10</property>
                 <property name="justify">center</property>
                 <property name="wrap">True</property>
+                <property name="max-width-chars">24</property>
                 <property name="xalign">0.5</property>
                 <property name="yalign">0.5</property>
               </object>
@@ -99,9 +104,10 @@
   <object class="GtkWindow" id="Preferences">
     <property name="name">PreferencesWindow</property>
     <property name="can-focus">False</property>
-    <property name="title" translatable="yes"> </property>
     <property name="resizable">False</property>
+    <property name="window-position">mouse</property>
     <property name="icon-name">preferences-color-symbolic</property>
+    <property name="gravity">center</property>
     <signal name="delete-event" handler="Preferences_destroy" swapped="no"/>
     <child>
       <object class="GtkBox" id="PreferencesWindow">
@@ -230,6 +236,7 @@
     <property name="name">CalculatorWindow</property>
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">Алюминий бета: Cyberbonk Edition</property>
+    <property name="window-position">center</property>
     <property name="default-width">1000</property>
     <property name="icon">..\Images\icon.png</property>
     <signal name="destroy" handler="on_MainWindow_destroy" object="Preferences" swapped="no"/>
@@ -337,7 +344,7 @@
                         <property name="can-focus">True</property>
                         <property name="can-default">True</property>
                         <property name="has-default">True</property>
-                        <property name="max-length">200</property>
+                        <property name="max-length">300</property>
                         <property name="xalign">0.009999999776482582</property>
                         <property name="placeholder-text" translatable="yes">Enter expression</property>
                         <signal name="key-release-event" handler="on_entry_key_press_event" swapped="no"/>
