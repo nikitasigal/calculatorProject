@@ -5,7 +5,7 @@
 
 #define VALUE_LENGTH 300
 
-#define NUMBER_LENGTH 50
+#define NUMBER_LENGTH 150
 
 #define INI_ARGUMENT_LENGTH 100
 
@@ -22,7 +22,7 @@ G_MODULE_EXPORT void on_MainWindow_destroy();
 
 G_MODULE_EXPORT void labelSetValue(GtkWidget *label, char *result);
 
-G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry);
+G_MODULE_EXPORT void calculate_button_clicked(GtkWidget *button, GtkEntry *entry);
 
 G_MODULE_EXPORT void on_entry_key_press_event(GtkWidget *entry, GdkEventKey *event, gpointer user_data);
 

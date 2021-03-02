@@ -200,7 +200,10 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
 }
 
 /*
- * Установка темы в соответствие с config.ini
+ * Установка темы в соответствие с config.ini. Принимает номер темы из файла конфигурации и устанавливает соответствующую
+ * тему и состояние свитчера.
+ * ВНИМАНИЕ: эта функция работает один раз за всю программу, вызывать её повторно нельзя. Повторное использование
+ * приведёт к неожиданным последствиям по типу наложения CSS-файлов друг на друга
  */
 void setTheme(int mode) {
     screen = gdk_screen_get_default();
@@ -229,7 +232,8 @@ void setTheme(int mode) {
 }
 
 /*
- * Установка режима калькулятора в соответствие с config.ini
+ * Установка режима калькулятора в соответствие с config.ini. Принимает параметр из файла конфигурации и устанавливает
+ * калькулятор в соответствующее состояние.
  */
 void setCalculatorMode(GtkBuilder *builder, int mode) {
     GtkStack *calculatorStack = GTK_STACK(gtk_builder_get_object(builder, "CalculatorStack"));
@@ -252,7 +256,9 @@ void setCalculatorMode(GtkBuilder *builder, int mode) {
 }
 
 /*
- * Обработка config.ini. Читает файл и устанавливает соответствующие настройки
+ * Обработка config.ini. Читает файл и устанавливает соответствующие настройки. При несоответствии шаблону файла
+ * конфигурации, config.ini сбрасывается к настройкам по умолчанию.
+ * Функция читает файл и вызывает setTheme и setCalculatorMode.
  */
 void setUserSettings(GtkBuilder *builder) {
     FILE *config = fopen("GUI/Settings/config.ini", "r+");
@@ -266,7 +272,7 @@ void setUserSettings(GtkBuilder *builder) {
 
     // Активная тема
     fscanf(config, "%s = %s", optionName, optionValue);
-    if (!strcmp(optionName, "ActiveTheme")) {
+    if (!strcmp(optionName, "ActiveTheme") && !strcmp(argument, "[PreferencesWindow]\n")) {
         index = strtol(optionValue, NULL, 10);
         setTheme(index);
     } else {
@@ -278,7 +284,7 @@ void setUserSettings(GtkBuilder *builder) {
 
     // Режим калькулятора
     fscanf(config, "%s = %s", optionName, optionValue);
-    if (!strcmp(optionName, "CalculatorDefaultMode")) {
+    if (!strcmp(optionName, "CalculatorDefaultMode") && !strcmp(argument, "[PreferencesWindow]\n")) {
         index = strtol(optionValue, NULL, 10);
         setCalculatorMode(builder, index);
     } else {
@@ -289,6 +295,24 @@ void setUserSettings(GtkBuilder *builder) {
     }
 
     fclose(config);
+}
+
+/*
+ * Сохранение настроек в config.ini. Берёт индексы активных ячеек в свитчерах и заносит в файл.
+ */
+void save() {
+    FILE *config = fopen("GUI/Settings/config.ini", "w");
+
+    fprintf(config, "%s\n", "[PreferencesWindow]");
+    int index;
+
+    // Активная тема
+    index = gtk_combo_box_get_active(themeChooser);
+    fprintf(config, "%s%d\n", "ActiveTheme = ", index);
+
+    // Режим калькулятора
+    index = gtk_combo_box_get_active(calculatorChooser);
+    fprintf(config, "%s%d", "CalculatorDefaultMode = ", index);
 }
 
 /*
@@ -336,42 +360,9 @@ void init_GUI() {
 }
 
 /*
- * Сохранение настроек в config.ini
- */
-void save() {
-    FILE *config = fopen("GUI/Settings/config.ini", "w");
-
-    fprintf(config, "%s\n", "[PreferencesWindow]");
-    int index;
-
-    // Активная тема
-    index = gtk_combo_box_get_active(themeChooser);
-    fprintf(config, "%s%d\n", "ActiveTheme = ", index);
-
-    // Режим калькулятора
-    index = gtk_combo_box_get_active(calculatorChooser);
-    fprintf(config, "%s%d", "CalculatorDefaultMode = ", index);
-}
-
-/*
- * Остановка программы при закрытии главного окна
- */
-G_MODULE_EXPORT void on_MainWindow_destroy() {
-    save();
-    gtk_main_quit();
-}
-
-/*
- * Установка текста в поле текста
- */
-G_MODULE_EXPORT void labelSetValue(GtkWidget *label, char *result) {
-    gtk_label_set_text(GTK_LABEL(label), result);
-}
-
-/*
  * Активирование функции calculate. Вызывается при нажатии enter в поле ввода или при нажатии клавиши '='
  */
-G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
+G_MODULE_EXPORT void calculate_button_clicked(GtkWidget *button, GtkEntry *entry) {
     // Очистка статических переменных
     ERROR = false;
     gtk_label_set_text(errorLabelWithName, "");
@@ -504,11 +495,18 @@ G_MODULE_EXPORT void on_button_clicked(GtkWidget *button, GtkEntry *entry) {
 }
 
 /*
+ * Установка текста в поле текста
+ */
+G_MODULE_EXPORT void labelSetValue(GtkWidget *label, char *result) {
+    gtk_label_set_text(GTK_LABEL(label), result);
+}
+
+/*
  * Сигнал при нажатии на enter
  */
 G_MODULE_EXPORT void on_entry_key_press_event(GtkWidget *entry, GdkEventKey *event, gpointer user_data) {
     if (event->keyval == GDK_KEY_Return) {
-        on_button_clicked(NULL, GTK_ENTRY(entry));
+        calculate_button_clicked(NULL, GTK_ENTRY(entry));
     }
 }
 
@@ -531,7 +529,8 @@ G_MODULE_EXPORT void on_TreeButtonAdd_clicked(GtkWidget *button, GtkListStore *l
 }
 
 /*
- * Если имя переменной было изменено, то изменяем
+ * Если имя переменной было изменено, то изменяем. Здесь есть небольшая проверка на корректность имени переменной.
+ * После заполнения имени, курсор перемещается на ячейку во втором столбце
  */
 G_MODULE_EXPORT void
 on_TreeTextFirst_edited(GtkCellRendererText *cell, gchar *path_string, gchar *new_text, gpointer user_data) {
@@ -554,19 +553,20 @@ on_TreeTextFirst_edited(GtkCellRendererText *cell, gchar *path_string, gchar *ne
     int treeSize = gtk_tree_model_iter_n_children(GTK_TREE_MODEL(listStore), NULL);
 
     GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
+    GtkTreeView *tree = gtk_tree_selection_get_tree_view(selection);
+    gtk_tree_view_set_cursor_on_cell(tree, path, secondColumn, NULL, 0);
     if (*index + 1 == treeSize && strlen(new_text) != 0) {
-        GtkTreeView *tree = gtk_tree_selection_get_tree_view(selection);
         gtk_list_store_append(listStore, &iter);
-        gtk_tree_view_set_cursor_on_cell(tree, path, secondColumn, NULL, 0);
     }
 }
 
 /*
- * Если изменено значение переменной
+ * Если изменено значение переменной. Есть проверка на раскладку пользователя. Русский язык откажет. После изменения
+ * значения, курсор переходит на следующую строку.
  */
 G_MODULE_EXPORT void
 on_TreeTextSecond_edited(GtkCellRendererText *cell, gchar *path_string, gchar *new_text, gpointer user_data) {
-    if (strlen(new_text) == 0 || (strlen(new_text) > 1 && new_text[1] < 0)) {
+    if (strlen(new_text) == 0) {
         return;
     }
     for (int i = 0; i < strlen(new_text); ++i) {
@@ -722,18 +722,7 @@ G_MODULE_EXPORT void on_calculator_button_clicked(GtkWidget *button, GtkEntry *e
 }
 
 /*
- * Открытие/закрытие дерева переменных
- */
-G_MODULE_EXPORT void on_variable_button_toggled(GtkToggleButton *switcher, GtkWidget *tree) {
-    if (gtk_toggle_button_get_active(switcher)) {
-        gtk_widget_show(tree);
-    } else {
-        gtk_widget_hide(tree);
-    }
-}
-
-/*
- * Обработка 2nd
+ * Обработка 2nd. Просто меняем названия лейбелов
  */
 G_MODULE_EXPORT void toggled_button_clicked(GtkToggleButton *button, GList *list) {
     if (gtk_toggle_button_get_active(button)) {
@@ -753,47 +742,31 @@ G_MODULE_EXPORT void toggled_button_clicked(GtkToggleButton *button, GList *list
 }
 
 /*
- * Обработка смены темы. Код для каждой темы выглядит одинаково, но почему-то адекватно у меня не получилось оформить,
- * какие-то беды с ссылками происходят
+ * Обработка смены темы.
  */
 G_MODULE_EXPORT void change_the_theme(GtkComboBoxText *box) {
-    if (strcmp(gtk_combo_box_text_get_active_text(box), "White theme") == 0) {
-        if (css)
-            gtk_style_context_remove_provider_for_screen(screen, GTK_STYLE_PROVIDER(css));
+    if (css)
+        gtk_style_context_remove_provider_for_screen(screen, GTK_STYLE_PROVIDER(css));
 
-        screen = gdk_screen_get_default();
-        css = gtk_css_provider_new();
+    screen = gdk_screen_get_default();
+    css = gtk_css_provider_new();
+
+    if (strcmp(gtk_combo_box_text_get_active_text(box), "White theme") == 0) {
         gtk_css_provider_load_from_path(css, "GUI/Themes/WhiteTheme.css", NULL);
-        gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(css),
-                                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-        g_object_unref(css);
     }
     if (strcmp(gtk_combo_box_text_get_active_text(box), "DOS-style theme") == 0) {
-        if (css)
-            gtk_style_context_remove_provider_for_screen(screen, GTK_STYLE_PROVIDER(css));
-
-        screen = gdk_screen_get_default();
-        css = gtk_css_provider_new();
         gtk_css_provider_load_from_path(css, "GUI/Themes/DOSStyleTheme.css", NULL);
-        gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(css),
-                                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-        g_object_unref(css);
     }
     if (strcmp(gtk_combo_box_text_get_active_text(box), "Night theme") == 0) {
-        if (css)
-            gtk_style_context_remove_provider_for_screen(screen, GTK_STYLE_PROVIDER(css));
-
-        screen = gdk_screen_get_default();
-        css = gtk_css_provider_new();
         gtk_css_provider_load_from_path(css, "GUI/Themes/NightTheme.css", NULL);
-        gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(css),
-                                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-        g_object_unref(css);
     }
+
+    gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(css), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    g_object_unref(css);
 }
 
 /*
- * Закрытие окна настоек
+ * Закрытие окна настроек
  */
 G_MODULE_EXPORT void Preferences_destroy(GtkWidget *preferences) {
     gtk_widget_hide(preferences);
@@ -804,4 +777,12 @@ G_MODULE_EXPORT void Preferences_destroy(GtkWidget *preferences) {
  */
 G_MODULE_EXPORT void ErrorWindow_destroy(GtkButton *button, GtkWidget *ErrorWindow) {
     gtk_widget_hide(ErrorWindow);
+}
+
+/*
+ * Остановка программы при закрытии главного окна и сохранение настроек
+ */
+G_MODULE_EXPORT void on_MainWindow_destroy() {
+    save();
+    gtk_main_quit();
 }

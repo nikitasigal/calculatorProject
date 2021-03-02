@@ -216,25 +216,6 @@
       </row>
     </data>
   </object>
-  <object class="GtkWindow">
-    <property name="can-focus">False</property>
-    <child>
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="orientation">vertical</property>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-      </object>
-    </child>
-  </object>
   <object class="GtkListStore" id="liststore1">
     <columns>
       <!-- column-name VarName -->
@@ -734,7 +715,7 @@
                         <property name="focus-on-click">False</property>
                         <property name="receives-default">True</property>
                         <property name="relief">none</property>
-                        <signal name="clicked" handler="on_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="calculate_button_clicked" object="entry" swapped="no"/>
                         <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
                         <child>
                           <object class="GtkLabel" id="button_label_42">
@@ -1484,7 +1465,7 @@
                         <property name="focus-on-click">False</property>
                         <property name="receives-default">True</property>
                         <property name="relief">none</property>
-                        <signal name="clicked" handler="on_button_clicked" object="entry" swapped="no"/>
+                        <signal name="clicked" handler="calculate_button_clicked" object="entry" swapped="no"/>
                         <signal name="clicked" handler="set_focus_to_entry" object="entry" swapped="no"/>
                         <child>
                           <object class="GtkLabel" id="button_label_21">
