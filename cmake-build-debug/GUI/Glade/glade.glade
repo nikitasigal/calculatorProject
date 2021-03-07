@@ -13,7 +13,7 @@
     <property name="window-position">center</property>
     <property name="default-width">200</property>
     <property name="default-height">100</property>
-    <property name="icon-name">edit-delete-symbolic</property>
+    <property name="icon">..\Images\Alien.png</property>
     <property name="urgency-hint">True</property>
     <property name="gravity">static</property>
     <signal name="delete-event" handler="Preferences_destroy" swapped="no"/>
@@ -104,9 +104,10 @@
   <object class="GtkWindow" id="Preferences">
     <property name="name">PreferencesWindow</property>
     <property name="can-focus">False</property>
+    <property name="title" translatable="yes">Preferences</property>
     <property name="resizable">False</property>
     <property name="window-position">mouse</property>
-    <property name="icon-name">preferences-color-symbolic</property>
+    <property name="icon">..\Images\Gear-icon.png</property>
     <property name="gravity">center</property>
     <signal name="delete-event" handler="Preferences_destroy" swapped="no"/>
     <child>
