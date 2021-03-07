@@ -135,7 +135,7 @@ int operatorPriority(const char *op) {
         case '^':
             return 10;
         case '~':
-            return 100;
+            return 5;
         default:
             return 0;
     }

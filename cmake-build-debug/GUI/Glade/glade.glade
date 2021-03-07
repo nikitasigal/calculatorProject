@@ -45,11 +45,11 @@
               <object class="GtkLabel" id="ErrorLabel">
                 <property name="name">ErrorLabel</property>
                 <property name="width-request">450</property>
-                <property name="height-request">34</property>
+                <property name="height-request">81</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="margin-top">5</property>
-                <property name="margin-bottom">10</property>
+                <property name="margin-bottom">30</property>
                 <property name="justify">center</property>
                 <property name="wrap">True</property>
                 <property name="max-width-chars">24</property>
@@ -57,7 +57,7 @@
                 <property name="yalign">0.5</property>
               </object>
               <packing>
-                <property name="y">71</property>
+                <property name="y">67</property>
               </packing>
             </child>
           </object>

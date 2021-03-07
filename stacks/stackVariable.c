@@ -10,7 +10,7 @@ void pushVariable(struct NodeVariable **s, char name[VAR_NAME_SIZE], char expres
 		char str[VAR_ELEMENT_SIZE] = {0};
 		int crt = 0;
 		if (isalpha(expression[i])) {
-			while (isalpha(expression[i]))
+			while (isalnum(expression[i]))
 				str[crt++] = expression[i++];
 			strcpy(var.expression[var.elements++], str);
 		} else if (isdigit(expression[i])) {

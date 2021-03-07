@@ -42,6 +42,7 @@ enum State {
  */
 bool isIncorrect(char *str, struct MapOperations *mp1) {
     enum State state = BEGINNING;
+    int bracketCount = 0;
 
     for (int i = 0; i < strlen(str);) {
         // Пропускаем пробелы
@@ -93,9 +94,11 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
             while (i < strlen(str) && !isOperator(&(str[i])) && !isblank(str[i]) && str[i] != '(' && str[i] != ')' &&
                    str[i] != ',') {
                 if (!isalnum(str[i])) {
-                    char tempStr[WORD_LENGTH] = "Wrong variable name: incorrect symbol ";
+                    char tempStr[WORD_LENGTH] = "Wrong variable name: incorrect symbol '";
                     char tempSymbol[2] = {0};
                     tempSymbol[0] = str[i];
+                    strcat(tempStr, tempSymbol);
+                    tempSymbol[0] = '\'';
                     strcat(tempStr, tempSymbol);
                     printError(tempStr);
                 }
@@ -123,9 +126,11 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
                 while (isblank(str[i])) {
                     ++i;
                 }
-                if (str[i] != '(')
+                if (str[i] != '(') {
                     printError("Wrong function usage: missed open bracket after function.");
-                else {
+                    return ERROR;
+                } else {
+                    ++bracketCount;
                     switch (state) {
                         case NUMBER:
                             printError("Missed operator between number and function.");
@@ -174,19 +179,19 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
             state = OPERATOR;
             ++i;
         } else if (str[i] == ')') {
-            switch (state) {
-                case OPERATOR:
-                    printError("Missed number/variable before close bracket.");
-                    return ERROR;
-                case BEGINNING:
-                    printError("Incorrect bracket sequence.");
-                    return ERROR;
-                default:
-                    break;
+            --bracketCount;
+            if (bracketCount < 0) {
+                printError("Incorrect bracket sequence: too much ')' .");
+                return ERROR;
+            }
+            if (state == OPERATOR) {
+                printError("Missed number/variable before close bracket.");
+                return ERROR;
             }
             state = CLOSE_BRACKET;
             ++i;
         } else if (str[i] == '(') {
+            ++bracketCount;
             switch (state) {
                 case NUMBER:
                     printError("Missed operator between number and open bracket.");
@@ -223,6 +228,10 @@ bool isIncorrect(char *str, struct MapOperations *mp1) {
     }
     if (state == START) {
         printError("Unfinished expression: unexpected '(' or ',' at the end of expression.");
+        return ERROR;
+    }
+    if (bracketCount > 0) {
+        printError("Incorrect bracket sequence: too much '(' .");
         return ERROR;
     }
 
