@@ -245,7 +245,8 @@ void sortVariables(struct NodeVariable **s, struct MapOperations opMap[MAP_SIZE]
                     struct NodeVariable *temp = (*s);
                     while (temp) {
                         if (!strcmp(temp->variable.name, cur->variable.expression[j])) {
-                            forwardVariable(s, temp);
+                        	if(!temp->variable.isSorted)
+                                forwardVariable(s, cur, temp);
                             break;
                         }
                         temp = temp->next;

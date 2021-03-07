@@ -24,6 +24,6 @@ void pushVariable(struct NodeVariable **s, char name[VAR_NAME_SIZE], char expres
 
 struct Variable popVariable(struct NodeVariable **s);
 
-void forwardVariable(struct NodeVariable **s, struct NodeVariable *cur);
+void forwardVariable(struct NodeVariable **s, struct NodeVariable *dest, struct NodeVariable *cur);
 
 #endif //CALCULATORPROJECT_STACKVARIABLE_H

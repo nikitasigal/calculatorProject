@@ -19,9 +19,9 @@ void pushVariable(struct NodeVariable **s, char name[VAR_NAME_SIZE], char expres
 			strcpy(var.expression[var.elements++], str);
 		} else {
 			if (expression[i] != ' ') {
-                var.expression[var.elements][1] = '\0';
-                var.expression[var.elements++][0] = expression[i];
-            }
+				var.expression[var.elements][1] = '\0';
+				var.expression[var.elements++][0] = expression[i];
+			}
 			i++;
 		}
 	}
@@ -51,27 +51,30 @@ struct Variable popVariable(struct NodeVariable **s) {
 	return var;
 }
 
-void forwardVariable(struct NodeVariable **s, struct NodeVariable *cur) {
-	if (!(*s)) {
-		printf("Critical error: attempted forwardVariable() with empty stack\n");
-		exit(EXIT_FAILURE);
-	}
+void forwardVariable(struct NodeVariable **s, struct NodeVariable *dest, struct NodeVariable *cur) {
+	struct NodeVariable *next = cur->next;
+	struct NodeVariable *prev = cur->prev;
+	if (next)
+		next->prev = prev;
+	if (prev)
+		prev->next = next;
 
-	if (cur == (*s)) {
+	if(cur == *s)
+		*s = next;
+
+	if (dest == *s) {
+		*s = cur;
+		dest->prev = cur;
+		cur->next = dest;
+		cur->prev = NULL;
 		return;
 	}
 
-	struct NodeVariable *prev = cur->prev;
-	struct NodeVariable *next = cur->next;
+	prev = dest->prev;
+	cur->next = dest;
+	dest->prev = cur;
 
-	prev->next = cur->next;
-	if (next)
-		next->prev = cur->prev;
-
-	cur->prev = NULL;
-	cur->next = *s;
-	if (cur->next)
-		cur->next->prev = cur;
-	*s = cur;
+	cur->prev = prev;
+	prev->next = cur;
 }
 
