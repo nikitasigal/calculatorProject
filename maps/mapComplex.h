@@ -13,6 +13,7 @@ struct MapComplex {
 void initVariables(struct MapComplex *m);
 
 void insertVariable(struct MapComplex *m, char *key, long double complex value);
+
 unsigned int findVariable(struct MapComplex *m, char *key);
 
 #endif //CALCULATORPROJECT_MAPCOMPLEX_H

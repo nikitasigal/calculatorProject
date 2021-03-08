@@ -59,7 +59,7 @@ void forwardVariable(struct NodeVariable **s, struct NodeVariable *dest, struct 
 	if (prev)
 		prev->next = next;
 
-	if(cur == *s)
+	if (cur == *s)
 		*s = next;
 
 	if (dest == *s) {
