@@ -1,0 +1,163 @@
+#PreferencesWindow {
+    background: white;
+}
+
+#ErrorWindow {
+    background: black;
+}
+
+#ErrorWindow label {
+    font: 20px "OCR A Extended";
+    color: #54fbfb;
+    text-shadow: none;
+}
+
+#ErrorButton {
+    color: #54fbfb;
+    font: 22px "OCR A Extended";
+    background: blue;
+    border-width: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#PreferencesWindow {
+    background: blue;
+}
+
+#PreferencesWindow label {
+    font: 16px "OCR A Extended";;
+    color: white;
+}
+
+#ThemeSwitcherPref *, #CalculatorSwitcherPref * {
+    font: 18px "OCR A Extended";
+    color: white;
+    background: #0000a9;
+    border-width: 0;
+    border-radius: 10px;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#ButtonsBox * {
+    text-shadow: none;
+}
+
+#TreeWindow *:selected {
+    background: #54fbfb;
+    color: blue;
+}
+
+#Tree header * {
+    background: #0000a9;
+    color: yellow;
+    font: 22px "OCR A Extended";
+    border-radius: 0;
+    border-width: 0;
+}
+
+#Tree {
+    color: #54fbfb;
+    background: blue;
+    font: 22px "OCR A Extended";
+    border-radius: 0;
+    border-width: 0;
+}
+
+#DeleteButton {
+    border-radius: 0;
+    border-color: yellow;
+    border-width: 4px;
+    font: 20px "OCR A Extended";
+    color: white;
+}
+
+#DeleteButton:hover {
+    background: black;
+}
+
+#AddButton {
+    border-radius: 0;
+    border-color: yellow;
+    border-width: 4px;
+    font: 20px "OCR A Extended";
+    color: white;
+}
+
+#AddButton:hover {
+    background: black;
+}
+
+#GtkMainBox {
+    background: black;
+}
+
+#Entry {
+    background: #0101b8;
+    color: yellow;
+    font: 22px "OCR A Extended";
+    border-radius: 0;
+    border-width: 5px;
+    border-color: white;
+}
+
+#Result {
+    color: white;
+    font: 52px "OCR A Extended";
+}
+
+#Grid, #GridBasic {
+    background: white;
+}
+
+#Grid *, #GridBasic * {
+    font: 20px "OCR A Extended";
+    text-shadow: none;
+    box-shadow: none;
+}
+
+#Grid button, #GridBasic button {
+    background: #0101b8;
+    border-width: 1px;
+    border-color: white;
+    border-radius: 0;
+    color: white;
+}
+
+#CalculatorSwitcher * {
+    font: 24px "OCR A Extended";
+    border-color: white;
+    border-radius: 0;
+    border-width: 3px;
+    color: white;
+    background: black;
+}
+
+
+#Variables, #Preferences {
+    font: 24px "OCR A Extended";
+    border-color: white;
+    border-radius: 0;
+    border-width: 6px;
+    background: black;
+    color: white;
+}
+
+#Variables:checked {
+    border-color: yellow;
+}
+
+#Entry {
+    caret-color: yellow;
+    box-shadow: none;
+}
+
+#CalculatorSwitcher *:checked {
+    border-color: yellow;
+    border-width: 6px;
+}
+
+#CalculatorWindow {
+    background: black;
+}

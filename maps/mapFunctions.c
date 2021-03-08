@@ -1,6 +1,6 @@
 #include "mapFunctions.h"
 
-void initMapOperations(struct MapOperations *m) {
+void initOperations(struct MapOperations *m) {
 	for (int i = 0; i < MAP_SIZE; ++i) {
 		m[i].key[0] = 0;
 		m[i].operation = NULL;

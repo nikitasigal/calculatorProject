@@ -1,16 +1,17 @@
 #include "stackOperator.h"
 
-void pushOperation(struct NodeOperation **s, char operation[OPERATOR_SIZE]) {
+void pushOperation(struct NodeOperation **s, char operation[OPERATION_SIZE]) {
 	struct NodeOperation *temp = (struct NodeOperation *) malloc(sizeof(struct NodeOperation));
 	strcpy(temp->operation, operation);
 	temp->next = *s;
 	*s = temp;
 }
 
-void popOperation(struct NodeOperation **s, char operation[OPERATOR_SIZE]) {
+void popOperation(struct NodeOperation **s, char operation[OPERATION_SIZE]) {
 	if (!(*s)) {
-		printf("Critical error: attempted popOperation() from empty stack\n");
-		exit(EXIT_FAILURE);
+		printError("Missing operation between operands");
+		strcpy(operation, "+");
+		return;
 	}
 
 	strcpy(operation, (*s)->operation);

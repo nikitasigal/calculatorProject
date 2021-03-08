@@ -1,0 +1,145 @@
+#ErrorWindow {
+    background: #171717;
+}
+
+#ErrorWindow label {
+    font: 20px "Segoe UI Semibold";
+    color: #cacaca;
+    text-shadow: none;
+}
+
+#ErrorButton {
+    color: #cacaca;
+    background: #303030;
+    border-width: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#PreferencesWindow {
+    background: #171717;
+}
+
+#PreferencesWindow label {
+    font: 20px "Segoe UI Semibold";
+    color: #cacaca;
+}
+
+#ThemeSwitcherPref *, #CalculatorSwitcherPref * {
+    font: 18px "Segoe UI Symbol";
+    color: #cacaca;
+    background: #252525;
+    border-width: 0;
+    border-radius: 10px;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#CalculatorWindow {
+    background: #171717;
+}
+
+#Grid, #GridBasic {
+    background: #171717;
+}
+
+#Grid *, #GridBasic * {
+    box-shadow: none;
+    text-shadow: none;
+
+    color: #cacaca;
+    font: 24px "Segoe UI Semibold";
+    border-radius: 2px;
+}
+
+.light {
+    background: #303030;
+}
+
+.dark {
+    background: #252525;
+}
+
+.accent {
+    background: #018c77;
+}
+
+#Entry {
+    color: #cacaca;
+    caret-color: #cacaca;
+
+    font: 24px "Segoe UI";
+    background: #252525;
+    border-width: 0;
+    border-radius: 20px;
+}
+
+#Result {
+    color: #cacaca;
+    font: 48px "Segoe UI Semibold";
+}
+
+#CalculatorSwitcher *, #Variables, #Preferences {
+    box-shadow: none;
+    text-shadow: none;
+    color: #cacaca;
+
+    font: 20px "Segoe UI";
+    background: #252525;
+    border-color: #252525;
+    border-width: 3px;
+    border-radius: 20px;
+}
+
+#CalculatorSwitcher button:checked * {
+    background: #018c77;
+}
+
+#CalculatorSwitcher button:checked {
+    background: #018c77;
+    border-color: #018c77;
+}
+
+#TreeWindow {
+    background: #171717;
+    border-width: 0;
+}
+
+#TreeWindow * {
+    border-width: 3px;
+    border-color: #171717;
+}
+
+#TreeWindow *:selected {
+    color: #cacaca;
+    background: #252525;
+    border-color: #018c77;
+}
+
+#Tree header * {
+    background: #252525;
+    font: 20px "Segoe UI";
+    border-radius: 0;
+    border-width: 0;
+    border-bottom-width: 3px;
+    border-bottom-color: #018c77;
+}
+
+#Tree {
+    background: #171717;
+    font: 20px "Segoe UI";
+    color: #cacaca;
+}
+
+#Tree * {
+    border-width: 0;
+}
+
+#DeleteButton, #AddButton {
+    color: #cacaca;
+    text-shadow: none;
+
+    border-radius: 0;
+    background: #252525;
+    font: 24px "Segoe UI";
+}

@@ -1,11 +1,13 @@
 #ifndef CALCULATORPROJECT_CALCULATIONS_H
 #define CALCULATORPROJECT_CALCULATIONS_H
 
+#include "libraries.h"
 #include "stacks/stackComplex.h"
 #include "stacks/stackVariable.h"
 #include "stacks/stackOperator.h"
 #include "maps/mapComplex.h"
 #include "maps/mapFunctions.h"
+#include "errorHandler.h"
 
 void tNegate(struct NodeComplex **s);
 
@@ -45,11 +47,11 @@ void tImag(struct NodeComplex **s);
 
 void tArg(struct NodeComplex **s);
 
-short isOperator(char op[OPERATOR_SIZE]);
+short isOperator(const char op[OPERATION_SIZE]);
 
-int operatorPriority(char op[OPERATOR_SIZE]);
+int operatorPriority(const char op[OPERATION_SIZE]);
 
-complex double calculate(struct MapOperations opMap[MAP_SIZE], struct MapComplex varMap[MAP_SIZE], struct Variable var);
+complex long double calculate(struct MapOperations opMap[MAP_SIZE], struct MapComplex varMap[MAP_SIZE], struct Variable var);
 
 void sortVariables(struct NodeVariable **s, struct MapOperations opMap[MAP_SIZE], struct MapComplex varMap[MAP_SIZE]);
 

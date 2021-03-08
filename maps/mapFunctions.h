@@ -11,7 +11,7 @@ struct MapOperations {
 	short empty;
 };
 
-void initMapOperations(struct MapOperations *m);
+void initOperations(struct MapOperations *m);
 
 void insertOperation(struct MapOperations *m, char *key, void (*ptr)(struct NodeComplex **));
 

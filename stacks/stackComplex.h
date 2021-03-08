@@ -2,14 +2,15 @@
 #define CALCULATORPROJECT_STACKCOMPLEX_H
 
 #include "../libraries.h"
+#include "../errorHandler.h"
 
 struct NodeComplex {
-	complex double value;
+	complex long double value;
 	struct NodeComplex *next;
 };
 
-void pushComplex(struct NodeComplex **s, complex double value);
+void pushComplex(struct NodeComplex **s, complex long double value);
 
-complex double popComplex(struct NodeComplex **s);
+complex long double popComplex(struct NodeComplex **s);
 
 #endif //CALCULATORPROJECT_STACKCOMPLEX_H

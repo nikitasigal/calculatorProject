@@ -1,0 +1,129 @@
+#ErrorWindow {
+    background: #e6e6e6;
+}
+
+#ErrorWindow label {
+    font: 20px "Segoe UI Semibold";
+    text-shadow: none;
+}
+
+#ErrorButton {
+    border-width: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#PreferencesWindow {
+    background: #e6e6e6;
+}
+
+#PreferencesWindow label {
+    font: 20px "Segoe UI Semibold";
+}
+
+#ThemeSwitcherPref *, #CalculatorSwitcherPref * {
+    font: 18px "Segoe UI Symbol";
+    color: black;
+
+    background: #fafafa;
+    border-width: 0;
+    border-radius: 10px;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+#CalculatorWindow {
+    background: #e6e6e6;
+}
+
+#Grid, #GridBasic {
+    background: #e6e6e6;
+}
+
+#Grid *, #GridBasic * {
+    box-shadow: none;
+    text-shadow: none;
+
+    font: 24px "Segoe UI Semibold";
+    border-radius: 2px;
+}
+
+.light {
+    background: #fafafa;
+}
+
+.dark {
+    background: #f0f0f0;
+}
+
+.accent {
+    background: #018c77;
+}
+
+#Entry {
+    font: 24px "Segoe UI";
+    background: #fafafa;
+    border-width: 0;
+    border-radius: 20px;
+}
+
+#Result {
+    font: 48px "Segoe UI Semibold";
+}
+
+#CalculatorSwitcher *, #Variables, #Preferences {
+    font: 20px "Segoe UI";
+    background: #fafafa;
+    border-color: #fafafa;
+    border-width: 3px;
+    border-radius: 20px;
+}
+
+#CalculatorSwitcher button:checked * {
+    background: #018c77;
+}
+
+#CalculatorSwitcher button:checked {
+    background: #018c77;
+    border-color: #018c77;
+}
+
+#TreeWindow {
+    background: #e6e6e6;
+    border-width: 0;
+}
+
+#TreeWindow * {
+    border-width: 3px;
+    border-color: #e6e6e6;
+}
+
+#TreeWindow *:selected {
+    color: black;
+    background: #f0f0f0;
+    border-color: #018c77;
+}
+
+#Tree header * {
+    background: #fafafa;
+    font: 20px "Segoe UI";
+    border-radius: 0;
+    border-width: 0;
+    border-bottom-width: 3px;
+    border-bottom-color: #018c77;
+}
+
+#Tree {
+    background: #e6e6e6;
+    font: 20px "Segoe UI";
+}
+
+#Tree * {
+    border-width: 0;
+}
+
+#DeleteButton, #AddButton {
+    border-radius: 0;
+    background: #fafafa;
+    font: 24px "Segoe UI";
+}
